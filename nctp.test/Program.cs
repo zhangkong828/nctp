@@ -6,6 +6,7 @@ namespace nctp.test
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("test trade");
             // investor, pwd, instrument, price for buy
             TestTrade tt = null;
             string addr = "tcp://180.168.146.187:10101", broker = "9999", investor = "008107", pwd = "1", inst = "rb2101", app = "simnow_client_test", code = "0000000000000000", proc = "";
@@ -30,7 +31,7 @@ namespace nctp.test
             //    tt.ReqOrderInsert("rb2101", DirectionType.Buy, OffsetType.Open, 4000, 2, 100000);
             //Console.WriteLine("Press any key to continue . . . ");
             //Console.ReadKey(true);
-
+            Console.WriteLine("test quote");
             TestQuote tq = new TestQuote(inst)
             {
                 FrontAddr = qaddr,
