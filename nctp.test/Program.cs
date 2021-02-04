@@ -37,13 +37,20 @@ namespace nctp.test
                 FrontAddr = qaddr,
                 Broker = broker,
             };
+            tq.OnRtnTick += Tq_OnRtnTick;
             tq.Run();
+            tq.ReqSubscribeMarketData("rb2101");
             Console.WriteLine("Press any key to continue . . . ");
             Console.ReadKey(true);
-
+            tq.ReqUnSubscribeMarketData("rb2101");
             tt.Release();
             tq.Release();
             Console.ReadKey(true);
+        }
+
+        private static void Tq_OnRtnTick(object sender, TickEventArgs e)
+        {
+            Console.WriteLine(e.Tick);
         }
     }
 }

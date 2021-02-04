@@ -90,10 +90,16 @@ namespace nctp
 		[DisplayName("跌板")]
 		public double LowerLimitPrice { get { return _LowerLimitPrice; } set { SetProperty(ref _LowerLimitPrice, value); } }
 		private double _LowerLimitPrice;
-		//int IComparable.CompareTo(object obj)
-		//{
-		//	MarketData y = (MarketData)obj;
-		//	return DateTime.ParseExact(UpdateTime, "yyyyMMdd HH:mm:ss", null).AddMilliseconds(UpdateMillisec).CompareTo(DateTime.ParseExact(y.UpdateTime, "yyyyMMdd HH:mm:ss", null).AddMilliseconds(y.UpdateMillisec));
-		//}
-	}
+        //int IComparable.CompareTo(object obj)
+        //{
+        //	MarketData y = (MarketData)obj;
+        //	return DateTime.ParseExact(UpdateTime, "yyyyMMdd HH:mm:ss", null).AddMilliseconds(UpdateMillisec).CompareTo(DateTime.ParseExact(y.UpdateTime, "yyyyMMdd HH:mm:ss", null).AddMilliseconds(y.UpdateMillisec));
+        //}
+
+
+        public override string ToString()
+        {
+            return $"合约:{_InstrumentID},最新价:{_LastPrice},申买价:{_BidPrice},申买量:{_BidVolume},申卖价:{_AskPrice},申卖量:{_AskVolume},当日均价:{_AveragePrice},数量:{_Volume},持仓量:{_OpenInterest},最后修改时间:{_UpdateTime},最后修改毫秒:{_UpdateMillisec},涨板:{_UpperLimitPrice},跌板:{_LowerLimitPrice}";
+        }
+    }
 }
