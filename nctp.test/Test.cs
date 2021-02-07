@@ -1,4 +1,5 @@
-﻿using System;
+﻿using nctp.test.DataCenter;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -8,9 +9,13 @@ namespace nctp.test
     {
         string _inst;
 
+        private DataProcess _dataProcess = null;
+
         public TestQuote(string instrument)
         {
             _inst = instrument;
+
+            _dataProcess = new DataProcess("service.haifengat.com:15555");
 
             this.OnFrontConnected += _q_OnFrontConnected;
             this.OnRspUserLogin += _q_OnRspUserLogin;
@@ -45,6 +50,8 @@ namespace nctp.test
             if (e.Value == 0)
             {
                 Log($"登录成功:{this.Investor}");
+                //交易日历
+                _dataProcess.UpdateInfo();
                 this.ReqSubscribeMarketData(_inst);
             }
             else
