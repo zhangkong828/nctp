@@ -13,18 +13,18 @@ namespace nctp.test
             string qaddr = "tcp://180.168.146.187:10111";
             double price_for_buy = 3900;
 
-            //tt = new TestTrade(inst, price_for_buy)
-            //{
-            //    FrontAddr = addr,
-            //    Broker = broker,
-            //    Investor = investor,
-            //    Password = pwd,
-            //    AppID = app,
-            //    AuthCode = code,
-            //    ProductInfo = app,
-            //};
+            tt = new TestTrade(inst, price_for_buy)
+            {
+                FrontAddr = addr,
+                Broker = broker,
+                Investor = investor,
+                Password = pwd,
+                AppID = app,
+                AuthCode = code,
+                ProductInfo = app,
+            };
 
-            //tt.Run();
+            tt.Run();
             //Console.WriteLine("Press any key to continue . . . ");
             //Console.ReadKey(true);
             //if (tt.IsLogin)
@@ -40,7 +40,7 @@ namespace nctp.test
                 FrontAddr = qaddr,
                 Broker = broker,
             };
-            tq.Run();
+            //tq.Run();
             Console.WriteLine("Press any key to continue . . . ");
             Console.ReadKey(true);
             //tt.Release();
