@@ -52,11 +52,10 @@ namespace nctp.test
                 Log($"登录成功:{this.Investor}");
                 //交易日历
                 _dataProcess.UpdateInfo();
-                this.ReqSubscribeMarketData(_inst);
+                this.ReqSubscribeMarketData(_inst, "rb2111");
             }
             else
             {
-                //this.OnFrontConnected -= _q_OnFrontConnected;    //解决登录错误后不断重连导致再不断登录的错误
                 Log($"登录错误：{e.Value}");
                 this.ReqUserLogout();
             }

@@ -56,16 +56,21 @@ namespace nctp.test.DataCenter
 		{
 			TradeDates = QueryDate();
 			Rate000 = QueryRate000();//合约在000中的占比
-			foreach (var g in QueryTime().GroupBy(n => n.GroupId))
+
+			var queryTime = QueryTime();
+			foreach (var g in queryTime.GroupBy(n => n.GroupId))
 				_workingTimes[g.Key] = g.OrderByDescending(n => n.OpenDate).First();
 
-			foreach (var v in QueryProduct())
+			var queryProduct = QueryProduct();
+			foreach (var v in queryProduct)
 				ProductInfo[v._id] = v;
 
-			foreach (var v in QueryInstrumentInfo())
+			var queryInstrumentInfo = QueryInstrumentInfo();
+			foreach (var v in queryInstrumentInfo)
 				InstrumentInfo[v._id] = v;
 
-			foreach (var v in QueryInstrument888())
+			var queryInstrument888 = QueryInstrument888();
+			foreach (var v in queryInstrument888)
 				Instrument888[v._id.TrimEnd('8')] = v.value;
 
 			//最后再处理minlist

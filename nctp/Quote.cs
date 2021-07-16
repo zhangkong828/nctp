@@ -50,7 +50,7 @@ namespace nctp
 		internal RtnTick _OnRtnTick;
 
 		/// <summary>
-		/// 
+		/// 实时行情
 		/// </summary>
 		public event RtnTick OnRtnTick
 		{

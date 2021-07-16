@@ -9,8 +9,8 @@ namespace nctp.test
             //Console.WriteLine("test trade");
             // investor, pwd, instrument, price for buy
             TestTrade tt = null;
-            string addr = "tcp://180.168.146.187:10201", broker = "9999", investor = "128821", pwd = "6024@oppzk", inst = "rb2110", app = "simnow_client_test", code = "0000000000000000", proc = "";
-            string qaddr = "tcp://180.168.146.187:10211";
+            string addr = "tcp://180.168.146.187:10130", broker = "9999", investor = "128821", pwd = "6024@oppzk", inst = "rb2110", app = "simnow_client_test", code = "0000000000000000", proc = "";
+            string qaddr = "tcp://180.168.146.187:10131";
             double price_for_buy = 3900;
 
             //tt = new TestTrade(inst, price_for_buy)
