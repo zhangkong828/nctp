@@ -74,7 +74,7 @@ namespace nctp
 		internal FrontConnected _OnFrontConnected;
 
 		/// <summary>
-		/// 
+		/// 连接成功后，触发该事件
 		/// </summary>
 		public event FrontConnected OnFrontConnected
 		{
@@ -98,7 +98,7 @@ namespace nctp
 		internal RspUserLogin _OnRspUserLogin;
 
 		/// <summary>
-		/// 
+		/// 用户登录后，触发该事件
 		/// </summary>
 		public event RspUserLogin OnRspUserLogin
 		{
@@ -122,7 +122,7 @@ namespace nctp
 		internal RspUserLogout _OnRspUserLogout;
 
 		/// <summary>
-		/// 
+		///  用户登出后，触发该事件
 		/// </summary>
 		public event RspUserLogout OnRspUserLogout
 		{
@@ -169,7 +169,8 @@ namespace nctp
 		public abstract int ReqConnect();
 
 		/// <summary>
-		/// 登录[重连时自动订阅DicTick.Keys中的合约]
+		/// 登录
+		/// <para>重连时自动订阅DicTick.Keys中的合约</para>
 		/// </summary>
 		/// <returns></returns>
 		public abstract int ReqUserLogin();
@@ -180,21 +181,22 @@ namespace nctp
 		public abstract bool IsLogin { get; protected set; }
 
 		/// <summary>
-		/// 退订[接口会Release]
+		/// 登出
+		/// <para>接口会Release</para>
 		/// </summary>
 		public abstract void ReqUserLogout();
 
 		/// <summary>
 		/// 订阅合约
 		/// </summary>
-		/// <param name="pInstrument"></param>
+		/// <param name="pInstrument">合约ID</param>
 		/// <returns></returns>
 		public abstract int ReqSubscribeMarketData(params string[] pInstrument);
 
 		/// <summary>
-		/// 退订
+		/// 退订合约
 		/// </summary>
-		/// <param name="pInstrument"></param>
+		/// <param name="pInstrument">合约ID</param>
 		/// <returns></returns>
 		public abstract int ReqUnSubscribeMarketData(params string[] pInstrument);
 	}
