@@ -27,10 +27,7 @@ namespace nctp
         private readonly List<Delegate> _listDele = new List<Delegate>();
         private int _ref = 0;
 
-        /// <summary>
-        /// 
-        /// </summary>
-		public CTPTrade()
+        public CTPTrade()
         {
             _t = new ctp_trade();
             this.SetCallBack();
@@ -174,10 +171,11 @@ namespace nctp
 
         private void CTPOnRspSettlementInfoConfirm(ref CThostFtdcSettlementInfoConfirmField pSettlementInfoConfirm, ref CThostFtdcRspInfoField pRspInfo, int nRequestID, bool bIsLast)
         {
-            if (this.Broker == "9999")
-                _t.ReqQryInstrument();
-            else
-                _t.ReqQryClassifiedInstrument(TradingType: TThostFtdcTradingTypeType.THOST_FTDC_TD_TRADE, ClassType: TThostFtdcClassTypeType.THOST_FTDC_INS_ALL);
+            //if (this.Broker == "9999")
+            //    _t.ReqQryInstrument();
+            //else
+            //    _t.ReqQryClassifiedInstrument(TradingType: TThostFtdcTradingTypeType.THOST_FTDC_TD_TRADE, ClassType: TThostFtdcClassTypeType.THOST_FTDC_INS_ALL);
+            _t.ReqQryClassifiedInstrument(TradingType: TThostFtdcTradingTypeType.THOST_FTDC_TD_TRADE, ClassType: TThostFtdcClassTypeType.THOST_FTDC_INS_ALL);
         }
 
         private void CTPOnRtnInstrumentStatus(ref CThostFtdcInstrumentStatusField pInstrumentStatus)
@@ -204,7 +202,7 @@ namespace nctp
 
         private void CTPOnRspQryClassifiedInstrument(ref CThostFtdcInstrumentField pInstrument, ref CThostFtdcRspInfoField pRspInfo, int nRequestID, bool bIsLast)
         {
-            CTPOnRspQryInstrument(ref pInstrument,ref pRspInfo, nRequestID, bIsLast);
+            CTPOnRspQryInstrument(ref pInstrument, ref pRspInfo, nRequestID, bIsLast);
         }
 
         private void CTPOnRspQryInstrument(ref CThostFtdcInstrumentField pInstrument, ref CThostFtdcRspInfoField pRspInfo, int nRequestID, bool bIsLast)
@@ -767,6 +765,8 @@ namespace nctp
             _t.RegisterFront(this.FrontAddr);
             _t.SubscribePrivateTopic(THOST_TE_RESUME_TYPE.THOST_TERT_RESTART);
             _t.SubscribePublicTopic(THOST_TE_RESUME_TYPE.THOST_TERT_RESTART);
+            //_t.Init();
+            //return (int)_t.Join();
             return (int)_t.Init();
         }
 

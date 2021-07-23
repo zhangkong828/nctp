@@ -1,20 +1,20 @@
 
 /// <summary>
-/// 
+/// 重传方式
 /// </summary>
 public enum THOST_TE_RESUME_TYPE
 {
-    /// <summary>
-    /// 
-    /// </summary>
+	/// <summary>
+	/// 从本交易日开始重传
+	/// </summary>
 	THOST_TERT_RESTART = 0,
 	/// <summary>
-    /// 
-    /// </summary>
+	/// 从上次收到的续传
+	/// </summary>
 	THOST_TERT_RESUME,
 	/// <summary>
-    /// 
-    /// </summary>
+	/// 只传送登录后私有流的内容
+	/// </summary>
 	THOST_TERT_QUICK
 }
 

@@ -105,6 +105,7 @@ namespace nctp.test
             this.OnRspUserLogout += _t_OnRspUserLogout;
             this.OnRspUserLogin += _t_OnRspUserLogin;
             this.OnRtnExchangeStatus += _t_OnRtnExchangeStatus;
+            this.OnRtnError += TestTrade_OnRtnError;
 
             this.OnRtnOrder += _t_OnRtnOrder;
             this.OnRtnTrade += _t_OnRtnTrade;
@@ -116,6 +117,11 @@ namespace nctp.test
             this.ReqConnect();
             //this.ReqConnect("tcp://218.202.237.33:10002");
             //this.ReqConnect("tcp://172.20.28.57:41205");
+        }
+
+        private void TestTrade_OnRtnError(object sender, ErrorEventArgs e)
+        {
+            Log($"登录错误：{e.ErrorID}={e.ErrorMsg}");
         }
 
         private void _t_OnRtnExchangeStatus(object sender, StatusEventArgs e)

@@ -9,31 +9,42 @@ namespace nctp.test
             //Console.WriteLine("test trade");
             // investor, pwd, instrument, price for buy
             TestTrade tt = null;
-            string addr = "tcp://180.168.146.187:10130", broker = "9999", investor = "128821", pwd = "6024@oppzk", inst = "rb2110", app = "simnow_client_test", code = "0000000000000000", proc = "";
+            string addr = "tcp://180.168.146.187:10130";
             string qaddr = "tcp://180.168.146.187:10131";
+
+            //string addr = "tcp://218.202.237.33:10203";
+            //string qaddr = "tcp://218.202.237.33:10213";
+
+            string broker = "9999";
+            string investor = "128821";
+            string pwd = "6024@oppzk";
+            string inst = "rb2110";
+            string app = "simnow_client_test";
+            string code = "0000000000000000";
+            string proc = "";
             double price_for_buy = 3900;
 
-            //tt = new TestTrade(inst, price_for_buy)
-            //{
-            //    FrontAddr = addr,
-            //    Broker = broker,
-            //    Investor = investor,
-            //    Password = pwd,
-            //    AppID = app,
-            //    AuthCode = code,
-            //    ProductInfo = app,
-            //};
+            tt = new TestTrade(inst, price_for_buy)
+            {
+                FrontAddr = addr,
+                Broker = broker,
+                Investor = investor,
+                Password = pwd,
+                AppID = app,
+                AuthCode = code,
+                ProductInfo = app,
+            };
 
-            //tt.Run();
+            tt.Run();
             //Console.WriteLine("Press any key to continue . . . ");
             //Console.ReadKey(true);
-            //if (tt.IsLogin)
-            //{
-            //    //tt.ReqOrderInsert("rb2101", DirectionType.Buy, OffsetType.Open, 4000, 2, 100000);
-                
-            //}
-            //Console.WriteLine("Press any key to continue . . . ");
-            //Console.ReadKey(true);
+            if (tt.IsLogin)
+            {
+                //tt.ReqOrderInsert("rb2101", DirectionType.Buy, OffsetType.Open, 4000, 2, 100000);
+                Console.WriteLine("login");
+            }
+            Console.WriteLine("Press any key to continue . . . ");
+            Console.ReadKey(true);
 
 
 

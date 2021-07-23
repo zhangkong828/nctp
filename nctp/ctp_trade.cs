@@ -226,33 +226,54 @@ namespace nctp
         {
             return (loader.Invoke( "Release", typeof(DeleRelease)) as DeleRelease)(_api);
         }
-                    
 
-        public IntPtr Init()
+		/// <summary>
+		/// 初始化
+		/// <para>初始化运行环境,只有调用后,接口才开始工作</para>
+		/// </summary>
+		/// <returns></returns>
+		public IntPtr Init()
         {
             return (loader.Invoke( "Init", typeof(DeleInit)) as DeleInit)(_api);
         }
-                    
 
-        public IntPtr Join()
+		/// <summary>
+		/// 等待接口线程结束运行
+		/// </summary>
+		/// <returns></returns>
+		public IntPtr Join()
         {
             return (loader.Invoke( "Join", typeof(DeleJoin)) as DeleJoin)(_api);
         }
-                    
 
-        public IntPtr RegisterFront(string pszFrontAddress)
+		/// <summary>
+		/// 注册前置机网络地址
+		/// </summary>
+		/// <param name="pszFrontAddress">前置机网络地址</param>
+		/// <returns></returns>
+		public IntPtr RegisterFront(string pszFrontAddress)
         {
             return (loader.Invoke( "RegisterFront", typeof(DeleRegisterFront)) as DeleRegisterFront)(_api, pszFrontAddress);
         }
-                    
 
-        public IntPtr RegisterNameServer(string pszNsAddress)
+		/// <summary>
+		/// 注册名字服务器网络地址
+		/// </summary>
+		/// <param name="pszNsAddress">名字服务器网络地址</param>
+		/// <returns></returns>
+		public IntPtr RegisterNameServer(string pszNsAddress)
         {
             return (loader.Invoke( "RegisterNameServer", typeof(DeleRegisterNameServer)) as DeleRegisterNameServer)(_api, pszNsAddress);
         }
-                    
 
-        public IntPtr RegisterFensUserInfo(string BrokerID = "",string UserID = "",TThostFtdcLoginModeType LoginMode = TThostFtdcLoginModeType.THOST_FTDC_LM_Trade)
+		/// <summary>
+		/// 注册名字服务器用户信息
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="UserID"></param>
+		/// <param name="LoginMode"></param>
+		/// <returns></returns>
+		public IntPtr RegisterFensUserInfo(string BrokerID = "",string UserID = "",TThostFtdcLoginModeType LoginMode = TThostFtdcLoginModeType.THOST_FTDC_LM_Trade)
         {
 			CThostFtdcFensUserInfoField pFensUserInfo = new CThostFtdcFensUserInfoField
 			{
@@ -268,21 +289,39 @@ namespace nctp
         {
             return (loader.Invoke( "RegisterSpi", typeof(DeleRegisterSpi)) as DeleRegisterSpi)(_api, pSpi);
         }
-                    
 
-        public IntPtr SubscribePrivateTopic(THOST_TE_RESUME_TYPE nResumeType)
+		/// <summary>
+		/// 订阅私有流
+		/// <para>该方法要在Init方法前调用。若不调用则不会收到私有流的数据</para>
+		/// </summary>
+		/// <param name="nResumeType">私有流重传方式 </param>
+		/// <returns></returns>
+		public IntPtr SubscribePrivateTopic(THOST_TE_RESUME_TYPE nResumeType)
         {
             return (loader.Invoke( "SubscribePrivateTopic", typeof(DeleSubscribePrivateTopic)) as DeleSubscribePrivateTopic)(_api, nResumeType);
         }
-                    
 
-        public IntPtr SubscribePublicTopic(THOST_TE_RESUME_TYPE nResumeType)
+		/// <summary>
+		/// 订阅公共流
+		/// <para>该方法要在Init方法前调用。若不调用则不会收到公共流的数据</para>
+		/// </summary>
+		/// <param name="nResumeType">公共流重传方式</param>
+		/// <returns></returns>
+		public IntPtr SubscribePublicTopic(THOST_TE_RESUME_TYPE nResumeType)
         {
             return (loader.Invoke( "SubscribePublicTopic", typeof(DeleSubscribePublicTopic)) as DeleSubscribePublicTopic)(_api, nResumeType);
         }
-                    
 
-        public IntPtr ReqAuthenticate(string BrokerID = "",string UserID = "",string UserProductInfo = "",string AuthCode = "",string AppID = "")
+		/// <summary>
+		/// 客户端认证请求
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="UserID"></param>
+		/// <param name="UserProductInfo"></param>
+		/// <param name="AuthCode"></param>
+		/// <param name="AppID"></param>
+		/// <returns></returns>
+		public IntPtr ReqAuthenticate(string BrokerID = "",string UserID = "",string UserProductInfo = "",string AuthCode = "",string AppID = "")
         {
 			CThostFtdcReqAuthenticateField pReqAuthenticateField = new CThostFtdcReqAuthenticateField
 			{
@@ -294,9 +333,22 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqAuthenticate", typeof(DeleReqAuthenticate)) as DeleReqAuthenticate)(_api, ref pReqAuthenticateField, this.nRequestID++);
         }
-                    
 
-        public IntPtr RegisterUserSystemInfo(string BrokerID = "",string UserID = "",int ClientSystemInfoLen = 0,string ClientSystemInfo = "",string reserve1 = "",int ClientIPPort = 0,string ClientLoginTime = "",string ClientAppID = "",string ClientPublicIP = "")
+		/// <summary>
+		/// 注册用户终端信息，用于中继服务器多连接模式
+		/// 需要在终端认证成功后，用户登录前调用该接口
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="UserID"></param>
+		/// <param name="ClientSystemInfoLen"></param>
+		/// <param name="ClientSystemInfo"></param>
+		/// <param name="reserve1"></param>
+		/// <param name="ClientIPPort"></param>
+		/// <param name="ClientLoginTime"></param>
+		/// <param name="ClientAppID"></param>
+		/// <param name="ClientPublicIP"></param>
+		/// <returns></returns>
+		public IntPtr RegisterUserSystemInfo(string BrokerID = "",string UserID = "",int ClientSystemInfoLen = 0,string ClientSystemInfo = "",string reserve1 = "",int ClientIPPort = 0,string ClientLoginTime = "",string ClientAppID = "",string ClientPublicIP = "")
         {
 			CThostFtdcUserSystemInfoField pUserSystemInfo = new CThostFtdcUserSystemInfoField
 			{
@@ -312,9 +364,22 @@ namespace nctp
 			};
             return (loader.Invoke( "RegisterUserSystemInfo", typeof(DeleRegisterUserSystemInfo)) as DeleRegisterUserSystemInfo)(_api, ref pUserSystemInfo);
         }
-                    
 
-        public IntPtr SubmitUserSystemInfo(string BrokerID = "",string UserID = "",int ClientSystemInfoLen = 0,string ClientSystemInfo = "",string reserve1 = "",int ClientIPPort = 0,string ClientLoginTime = "",string ClientAppID = "",string ClientPublicIP = "")
+		/// <summary>
+		/// 上报用户终端信息，用于中继服务器操作员登录模式
+		/// 操作员登录后，可以多次调用该接口上报客户信息
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="UserID"></param>
+		/// <param name="ClientSystemInfoLen"></param>
+		/// <param name="ClientSystemInfo"></param>
+		/// <param name="reserve1"></param>
+		/// <param name="ClientIPPort"></param>
+		/// <param name="ClientLoginTime"></param>
+		/// <param name="ClientAppID"></param>
+		/// <param name="ClientPublicIP"></param>
+		/// <returns></returns>
+		public IntPtr SubmitUserSystemInfo(string BrokerID = "",string UserID = "",int ClientSystemInfoLen = 0,string ClientSystemInfo = "",string reserve1 = "",int ClientIPPort = 0,string ClientLoginTime = "",string ClientAppID = "",string ClientPublicIP = "")
         {
 			CThostFtdcUserSystemInfoField pUserSystemInfo = new CThostFtdcUserSystemInfoField
 			{
@@ -330,9 +395,25 @@ namespace nctp
 			};
             return (loader.Invoke( "SubmitUserSystemInfo", typeof(DeleSubmitUserSystemInfo)) as DeleSubmitUserSystemInfo)(_api, ref pUserSystemInfo);
         }
-                    
 
-        public IntPtr ReqUserLogin(string TradingDay = "",string BrokerID = "",string UserID = "",string Password = "",string UserProductInfo = "",string InterfaceProductInfo = "",string ProtocolInfo = "",string MacAddress = "",string OneTimePassword = "",string reserve1 = "",string LoginRemark = "",int ClientIPPort = 0,string ClientIPAddress = "")
+		/// <summary>
+		/// 用户登录请求
+		/// </summary>
+		/// <param name="TradingDay"></param>
+		/// <param name="BrokerID"></param>
+		/// <param name="UserID"></param>
+		/// <param name="Password"></param>
+		/// <param name="UserProductInfo"></param>
+		/// <param name="InterfaceProductInfo"></param>
+		/// <param name="ProtocolInfo"></param>
+		/// <param name="MacAddress"></param>
+		/// <param name="OneTimePassword"></param>
+		/// <param name="reserve1"></param>
+		/// <param name="LoginRemark"></param>
+		/// <param name="ClientIPPort"></param>
+		/// <param name="ClientIPAddress"></param>
+		/// <returns></returns>
+		public IntPtr ReqUserLogin(string TradingDay = "",string BrokerID = "",string UserID = "",string Password = "",string UserProductInfo = "",string InterfaceProductInfo = "",string ProtocolInfo = "",string MacAddress = "",string OneTimePassword = "",string reserve1 = "",string LoginRemark = "",int ClientIPPort = 0,string ClientIPAddress = "")
         {
 			CThostFtdcReqUserLoginField pReqUserLoginField = new CThostFtdcReqUserLoginField
 			{
@@ -352,9 +433,14 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqUserLogin", typeof(DeleReqUserLogin)) as DeleReqUserLogin)(_api, ref pReqUserLoginField, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqUserLogout(string BrokerID = "",string UserID = "")
+		/// <summary>
+		/// 登出请求
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="UserID"></param>
+		/// <returns></returns>
+		public IntPtr ReqUserLogout(string BrokerID = "",string UserID = "")
         {
 			CThostFtdcUserLogoutField pUserLogout = new CThostFtdcUserLogoutField
 			{
@@ -363,9 +449,16 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqUserLogout", typeof(DeleReqUserLogout)) as DeleReqUserLogout)(_api, ref pUserLogout, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqUserPasswordUpdate(string BrokerID = "",string UserID = "",string OldPassword = "",string NewPassword = "")
+		/// <summary>
+		/// 用户口令更新请求
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="UserID"></param>
+		/// <param name="OldPassword"></param>
+		/// <param name="NewPassword"></param>
+		/// <returns></returns>
+		public IntPtr ReqUserPasswordUpdate(string BrokerID = "",string UserID = "",string OldPassword = "",string NewPassword = "")
         {
 			CThostFtdcUserPasswordUpdateField pUserPasswordUpdate = new CThostFtdcUserPasswordUpdateField
 			{
@@ -376,9 +469,17 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqUserPasswordUpdate", typeof(DeleReqUserPasswordUpdate)) as DeleReqUserPasswordUpdate)(_api, ref pUserPasswordUpdate, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqTradingAccountPasswordUpdate(string BrokerID = "",string AccountID = "",string OldPassword = "",string NewPassword = "",string CurrencyID = "")
+		/// <summary>
+		/// 资金账户口令更新请求
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="AccountID"></param>
+		/// <param name="OldPassword"></param>
+		/// <param name="NewPassword"></param>
+		/// <param name="CurrencyID"></param>
+		/// <returns></returns>
+		public IntPtr ReqTradingAccountPasswordUpdate(string BrokerID = "",string AccountID = "",string OldPassword = "",string NewPassword = "",string CurrencyID = "")
         {
 			CThostFtdcTradingAccountPasswordUpdateField pTradingAccountPasswordUpdate = new CThostFtdcTradingAccountPasswordUpdateField
 			{
@@ -390,9 +491,15 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqTradingAccountPasswordUpdate", typeof(DeleReqTradingAccountPasswordUpdate)) as DeleReqTradingAccountPasswordUpdate)(_api, ref pTradingAccountPasswordUpdate, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqUserAuthMethod(string TradingDay = "",string BrokerID = "",string UserID = "")
+		/// <summary>
+		/// 查询用户当前支持的认证模式
+		/// </summary>
+		/// <param name="TradingDay"></param>
+		/// <param name="BrokerID"></param>
+		/// <param name="UserID"></param>
+		/// <returns></returns>
+		public IntPtr ReqUserAuthMethod(string TradingDay = "",string BrokerID = "",string UserID = "")
         {
 			CThostFtdcReqUserAuthMethodField pReqUserAuthMethod = new CThostFtdcReqUserAuthMethodField
 			{
@@ -402,9 +509,15 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqUserAuthMethod", typeof(DeleReqUserAuthMethod)) as DeleReqUserAuthMethod)(_api, ref pReqUserAuthMethod, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqGenUserCaptcha(string TradingDay = "",string BrokerID = "",string UserID = "")
+		/// <summary>
+		/// 用户发出获取图形验证码请求
+		/// </summary>
+		/// <param name="TradingDay"></param>
+		/// <param name="BrokerID"></param>
+		/// <param name="UserID"></param>
+		/// <returns></returns>
+		public IntPtr ReqGenUserCaptcha(string TradingDay = "",string BrokerID = "",string UserID = "")
         {
 			CThostFtdcReqGenUserCaptchaField pReqGenUserCaptcha = new CThostFtdcReqGenUserCaptchaField
 			{
@@ -414,9 +527,15 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqGenUserCaptcha", typeof(DeleReqGenUserCaptcha)) as DeleReqGenUserCaptcha)(_api, ref pReqGenUserCaptcha, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqGenUserText(string TradingDay = "",string BrokerID = "",string UserID = "")
+		/// <summary>
+		/// 用户发出获取短信验证码请求
+		/// </summary>
+		/// <param name="TradingDay"></param>
+		/// <param name="BrokerID"></param>
+		/// <param name="UserID"></param>
+		/// <returns></returns>
+		public IntPtr ReqGenUserText(string TradingDay = "",string BrokerID = "",string UserID = "")
         {
 			CThostFtdcReqGenUserTextField pReqGenUserText = new CThostFtdcReqGenUserTextField
 			{
@@ -426,9 +545,25 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqGenUserText", typeof(DeleReqGenUserText)) as DeleReqGenUserText)(_api, ref pReqGenUserText, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqUserLoginWithCaptcha(string TradingDay = "",string BrokerID = "",string UserID = "",string Password = "",string UserProductInfo = "",string InterfaceProductInfo = "",string ProtocolInfo = "",string MacAddress = "",string reserve1 = "",string LoginRemark = "",string Captcha = "",int ClientIPPort = 0,string ClientIPAddress = "")
+		/// <summary>
+		/// 用户发出带有动态口令的登陆请求
+		/// </summary>
+		/// <param name="TradingDay"></param>
+		/// <param name="BrokerID"></param>
+		/// <param name="UserID"></param>
+		/// <param name="Password"></param>
+		/// <param name="UserProductInfo"></param>
+		/// <param name="InterfaceProductInfo"></param>
+		/// <param name="ProtocolInfo"></param>
+		/// <param name="MacAddress"></param>
+		/// <param name="reserve1"></param>
+		/// <param name="LoginRemark"></param>
+		/// <param name="Captcha"></param>
+		/// <param name="ClientIPPort"></param>
+		/// <param name="ClientIPAddress"></param>
+		/// <returns></returns>
+		public IntPtr ReqUserLoginWithCaptcha(string TradingDay = "",string BrokerID = "",string UserID = "",string Password = "",string UserProductInfo = "",string InterfaceProductInfo = "",string ProtocolInfo = "",string MacAddress = "",string reserve1 = "",string LoginRemark = "",string Captcha = "",int ClientIPPort = 0,string ClientIPAddress = "")
         {
 			CThostFtdcReqUserLoginWithCaptchaField pReqUserLoginWithCaptcha = new CThostFtdcReqUserLoginWithCaptchaField
 			{
@@ -448,9 +583,25 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqUserLoginWithCaptcha", typeof(DeleReqUserLoginWithCaptcha)) as DeleReqUserLoginWithCaptcha)(_api, ref pReqUserLoginWithCaptcha, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqUserLoginWithText(string TradingDay = "",string BrokerID = "",string UserID = "",string Password = "",string UserProductInfo = "",string InterfaceProductInfo = "",string ProtocolInfo = "",string MacAddress = "",string reserve1 = "",string LoginRemark = "",string Text = "",int ClientIPPort = 0,string ClientIPAddress = "")
+		/// <summary>
+		/// 用户发出带有短信验证码的登陆请求
+		/// </summary>
+		/// <param name="TradingDay"></param>
+		/// <param name="BrokerID"></param>
+		/// <param name="UserID"></param>
+		/// <param name="Password"></param>
+		/// <param name="UserProductInfo"></param>
+		/// <param name="InterfaceProductInfo"></param>
+		/// <param name="ProtocolInfo"></param>
+		/// <param name="MacAddress"></param>
+		/// <param name="reserve1"></param>
+		/// <param name="LoginRemark"></param>
+		/// <param name="Text"></param>
+		/// <param name="ClientIPPort"></param>
+		/// <param name="ClientIPAddress"></param>
+		/// <returns></returns>
+		public IntPtr ReqUserLoginWithText(string TradingDay = "",string BrokerID = "",string UserID = "",string Password = "",string UserProductInfo = "",string InterfaceProductInfo = "",string ProtocolInfo = "",string MacAddress = "",string reserve1 = "",string LoginRemark = "",string Text = "",int ClientIPPort = 0,string ClientIPAddress = "")
         {
 			CThostFtdcReqUserLoginWithTextField pReqUserLoginWithText = new CThostFtdcReqUserLoginWithTextField
 			{
@@ -470,9 +621,25 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqUserLoginWithText", typeof(DeleReqUserLoginWithText)) as DeleReqUserLoginWithText)(_api, ref pReqUserLoginWithText, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqUserLoginWithOTP(string TradingDay = "",string BrokerID = "",string UserID = "",string Password = "",string UserProductInfo = "",string InterfaceProductInfo = "",string ProtocolInfo = "",string MacAddress = "",string reserve1 = "",string LoginRemark = "",string OTPPassword = "",int ClientIPPort = 0,string ClientIPAddress = "")
+		/// <summary>
+		/// 用户发出带有动态口令的登陆请求
+		/// </summary>
+		/// <param name="TradingDay"></param>
+		/// <param name="BrokerID"></param>
+		/// <param name="UserID"></param>
+		/// <param name="Password"></param>
+		/// <param name="UserProductInfo"></param>
+		/// <param name="InterfaceProductInfo"></param>
+		/// <param name="ProtocolInfo"></param>
+		/// <param name="MacAddress"></param>
+		/// <param name="reserve1"></param>
+		/// <param name="LoginRemark"></param>
+		/// <param name="OTPPassword"></param>
+		/// <param name="ClientIPPort"></param>
+		/// <param name="ClientIPAddress"></param>
+		/// <returns></returns>
+		public IntPtr ReqUserLoginWithOTP(string TradingDay = "",string BrokerID = "",string UserID = "",string Password = "",string UserProductInfo = "",string InterfaceProductInfo = "",string ProtocolInfo = "",string MacAddress = "",string reserve1 = "",string LoginRemark = "",string OTPPassword = "",int ClientIPPort = 0,string ClientIPAddress = "")
         {
 			CThostFtdcReqUserLoginWithOTPField pReqUserLoginWithOTP = new CThostFtdcReqUserLoginWithOTPField
 			{
@@ -492,9 +659,44 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqUserLoginWithOTP", typeof(DeleReqUserLoginWithOTP)) as DeleReqUserLoginWithOTP)(_api, ref pReqUserLoginWithOTP, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqOrderInsert(string BrokerID = "",string InvestorID = "",string reserve1 = "",string OrderRef = "",string UserID = "",TThostFtdcOrderPriceTypeType OrderPriceType = TThostFtdcOrderPriceTypeType.THOST_FTDC_OPT_AnyPrice,TThostFtdcDirectionType Direction = TThostFtdcDirectionType.THOST_FTDC_D_Buy,string CombOffsetFlag = "",string CombHedgeFlag = "",double LimitPrice = 0.0,int VolumeTotalOriginal = 0,TThostFtdcTimeConditionType TimeCondition = TThostFtdcTimeConditionType.THOST_FTDC_TC_IOC,string GTDDate = "",TThostFtdcVolumeConditionType VolumeCondition = TThostFtdcVolumeConditionType.THOST_FTDC_VC_AV,int MinVolume = 0,TThostFtdcContingentConditionType ContingentCondition = TThostFtdcContingentConditionType.THOST_FTDC_CC_Immediately,double StopPrice = 0.0,TThostFtdcForceCloseReasonType ForceCloseReason = TThostFtdcForceCloseReasonType.THOST_FTDC_FCC_NotForceClose,int IsAutoSuspend = 0,string BusinessUnit = "",int RequestID = 0,int UserForceClose = 0,int IsSwapOrder = 0,string ExchangeID = "",string InvestUnitID = "",string AccountID = "",string CurrencyID = "",string ClientID = "",string reserve2 = "",string MacAddress = "",string InstrumentID = "",string IPAddress = "")
+		/// <summary>
+		/// 报单录入请求
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="reserve1"></param>
+		/// <param name="OrderRef"></param>
+		/// <param name="UserID"></param>
+		/// <param name="OrderPriceType"></param>
+		/// <param name="Direction"></param>
+		/// <param name="CombOffsetFlag"></param>
+		/// <param name="CombHedgeFlag"></param>
+		/// <param name="LimitPrice"></param>
+		/// <param name="VolumeTotalOriginal"></param>
+		/// <param name="TimeCondition"></param>
+		/// <param name="GTDDate"></param>
+		/// <param name="VolumeCondition"></param>
+		/// <param name="MinVolume"></param>
+		/// <param name="ContingentCondition"></param>
+		/// <param name="StopPrice"></param>
+		/// <param name="ForceCloseReason"></param>
+		/// <param name="IsAutoSuspend"></param>
+		/// <param name="BusinessUnit"></param>
+		/// <param name="RequestID"></param>
+		/// <param name="UserForceClose"></param>
+		/// <param name="IsSwapOrder"></param>
+		/// <param name="ExchangeID"></param>
+		/// <param name="InvestUnitID"></param>
+		/// <param name="AccountID"></param>
+		/// <param name="CurrencyID"></param>
+		/// <param name="ClientID"></param>
+		/// <param name="reserve2"></param>
+		/// <param name="MacAddress"></param>
+		/// <param name="InstrumentID"></param>
+		/// <param name="IPAddress"></param>
+		/// <returns></returns>
+		public IntPtr ReqOrderInsert(string BrokerID = "",string InvestorID = "",string reserve1 = "",string OrderRef = "",string UserID = "",TThostFtdcOrderPriceTypeType OrderPriceType = TThostFtdcOrderPriceTypeType.THOST_FTDC_OPT_AnyPrice,TThostFtdcDirectionType Direction = TThostFtdcDirectionType.THOST_FTDC_D_Buy,string CombOffsetFlag = "",string CombHedgeFlag = "",double LimitPrice = 0.0,int VolumeTotalOriginal = 0,TThostFtdcTimeConditionType TimeCondition = TThostFtdcTimeConditionType.THOST_FTDC_TC_IOC,string GTDDate = "",TThostFtdcVolumeConditionType VolumeCondition = TThostFtdcVolumeConditionType.THOST_FTDC_VC_AV,int MinVolume = 0,TThostFtdcContingentConditionType ContingentCondition = TThostFtdcContingentConditionType.THOST_FTDC_CC_Immediately,double StopPrice = 0.0,TThostFtdcForceCloseReasonType ForceCloseReason = TThostFtdcForceCloseReasonType.THOST_FTDC_FCC_NotForceClose,int IsAutoSuspend = 0,string BusinessUnit = "",int RequestID = 0,int UserForceClose = 0,int IsSwapOrder = 0,string ExchangeID = "",string InvestUnitID = "",string AccountID = "",string CurrencyID = "",string ClientID = "",string reserve2 = "",string MacAddress = "",string InstrumentID = "",string IPAddress = "")
         {
 			CThostFtdcInputOrderField pInputOrder = new CThostFtdcInputOrderField
 			{
@@ -533,9 +735,49 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqOrderInsert", typeof(DeleReqOrderInsert)) as DeleReqOrderInsert)(_api, ref pInputOrder, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqParkedOrderInsert(string BrokerID = "",string InvestorID = "",string reserve1 = "",string OrderRef = "",string UserID = "",TThostFtdcOrderPriceTypeType OrderPriceType = TThostFtdcOrderPriceTypeType.THOST_FTDC_OPT_AnyPrice,TThostFtdcDirectionType Direction = TThostFtdcDirectionType.THOST_FTDC_D_Buy,string CombOffsetFlag = "",string CombHedgeFlag = "",double LimitPrice = 0.0,int VolumeTotalOriginal = 0,TThostFtdcTimeConditionType TimeCondition = TThostFtdcTimeConditionType.THOST_FTDC_TC_IOC,string GTDDate = "",TThostFtdcVolumeConditionType VolumeCondition = TThostFtdcVolumeConditionType.THOST_FTDC_VC_AV,int MinVolume = 0,TThostFtdcContingentConditionType ContingentCondition = TThostFtdcContingentConditionType.THOST_FTDC_CC_Immediately,double StopPrice = 0.0,TThostFtdcForceCloseReasonType ForceCloseReason = TThostFtdcForceCloseReasonType.THOST_FTDC_FCC_NotForceClose,int IsAutoSuspend = 0,string BusinessUnit = "",int RequestID = 0,int UserForceClose = 0,string ExchangeID = "",string ParkedOrderID = "",TThostFtdcUserTypeType UserType = TThostFtdcUserTypeType.THOST_FTDC_UT_Investor,TThostFtdcParkedOrderStatusType Status = TThostFtdcParkedOrderStatusType.THOST_FTDC_PAOS_NotSend,int ErrorID = 0,string ErrorMsg = "",int IsSwapOrder = 0,string AccountID = "",string CurrencyID = "",string ClientID = "",string InvestUnitID = "",string reserve2 = "",string MacAddress = "",string InstrumentID = "",string IPAddress = "")
+		/// <summary>
+		/// 预埋单录入请求
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="reserve1"></param>
+		/// <param name="OrderRef"></param>
+		/// <param name="UserID"></param>
+		/// <param name="OrderPriceType"></param>
+		/// <param name="Direction"></param>
+		/// <param name="CombOffsetFlag"></param>
+		/// <param name="CombHedgeFlag"></param>
+		/// <param name="LimitPrice"></param>
+		/// <param name="VolumeTotalOriginal"></param>
+		/// <param name="TimeCondition"></param>
+		/// <param name="GTDDate"></param>
+		/// <param name="VolumeCondition"></param>
+		/// <param name="MinVolume"></param>
+		/// <param name="ContingentCondition"></param>
+		/// <param name="StopPrice"></param>
+		/// <param name="ForceCloseReason"></param>
+		/// <param name="IsAutoSuspend"></param>
+		/// <param name="BusinessUnit"></param>
+		/// <param name="RequestID"></param>
+		/// <param name="UserForceClose"></param>
+		/// <param name="ExchangeID"></param>
+		/// <param name="ParkedOrderID"></param>
+		/// <param name="UserType"></param>
+		/// <param name="Status"></param>
+		/// <param name="ErrorID"></param>
+		/// <param name="ErrorMsg"></param>
+		/// <param name="IsSwapOrder"></param>
+		/// <param name="AccountID"></param>
+		/// <param name="CurrencyID"></param>
+		/// <param name="ClientID"></param>
+		/// <param name="InvestUnitID"></param>
+		/// <param name="reserve2"></param>
+		/// <param name="MacAddress"></param>
+		/// <param name="InstrumentID"></param>
+		/// <param name="IPAddress"></param>
+		/// <returns></returns>
+		public IntPtr ReqParkedOrderInsert(string BrokerID = "",string InvestorID = "",string reserve1 = "",string OrderRef = "",string UserID = "",TThostFtdcOrderPriceTypeType OrderPriceType = TThostFtdcOrderPriceTypeType.THOST_FTDC_OPT_AnyPrice,TThostFtdcDirectionType Direction = TThostFtdcDirectionType.THOST_FTDC_D_Buy,string CombOffsetFlag = "",string CombHedgeFlag = "",double LimitPrice = 0.0,int VolumeTotalOriginal = 0,TThostFtdcTimeConditionType TimeCondition = TThostFtdcTimeConditionType.THOST_FTDC_TC_IOC,string GTDDate = "",TThostFtdcVolumeConditionType VolumeCondition = TThostFtdcVolumeConditionType.THOST_FTDC_VC_AV,int MinVolume = 0,TThostFtdcContingentConditionType ContingentCondition = TThostFtdcContingentConditionType.THOST_FTDC_CC_Immediately,double StopPrice = 0.0,TThostFtdcForceCloseReasonType ForceCloseReason = TThostFtdcForceCloseReasonType.THOST_FTDC_FCC_NotForceClose,int IsAutoSuspend = 0,string BusinessUnit = "",int RequestID = 0,int UserForceClose = 0,string ExchangeID = "",string ParkedOrderID = "",TThostFtdcUserTypeType UserType = TThostFtdcUserTypeType.THOST_FTDC_UT_Investor,TThostFtdcParkedOrderStatusType Status = TThostFtdcParkedOrderStatusType.THOST_FTDC_PAOS_NotSend,int ErrorID = 0,string ErrorMsg = "",int IsSwapOrder = 0,string AccountID = "",string CurrencyID = "",string ClientID = "",string InvestUnitID = "",string reserve2 = "",string MacAddress = "",string InstrumentID = "",string IPAddress = "")
         {
 			CThostFtdcParkedOrderField pParkedOrder = new CThostFtdcParkedOrderField
 			{
@@ -579,9 +821,36 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqParkedOrderInsert", typeof(DeleReqParkedOrderInsert)) as DeleReqParkedOrderInsert)(_api, ref pParkedOrder, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqParkedOrderAction(string BrokerID = "",string InvestorID = "",int OrderActionRef = 0,string OrderRef = "",int RequestID = 0,int FrontID = 0,int SessionID = 0,string ExchangeID = "",string OrderSysID = "",TThostFtdcActionFlagType ActionFlag = TThostFtdcActionFlagType.THOST_FTDC_AF_Delete,double LimitPrice = 0.0,int VolumeChange = 0,string UserID = "",string reserve1 = "",string ParkedOrderActionID = "",TThostFtdcUserTypeType UserType = TThostFtdcUserTypeType.THOST_FTDC_UT_Investor,TThostFtdcParkedOrderStatusType Status = TThostFtdcParkedOrderStatusType.THOST_FTDC_PAOS_NotSend,int ErrorID = 0,string ErrorMsg = "",string InvestUnitID = "",string reserve2 = "",string MacAddress = "",string InstrumentID = "",string IPAddress = "")
+		/// <summary>
+		/// 预埋撤单录入请求
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="OrderActionRef"></param>
+		/// <param name="OrderRef"></param>
+		/// <param name="RequestID"></param>
+		/// <param name="FrontID"></param>
+		/// <param name="SessionID"></param>
+		/// <param name="ExchangeID"></param>
+		/// <param name="OrderSysID"></param>
+		/// <param name="ActionFlag"></param>
+		/// <param name="LimitPrice"></param>
+		/// <param name="VolumeChange"></param>
+		/// <param name="UserID"></param>
+		/// <param name="reserve1"></param>
+		/// <param name="ParkedOrderActionID"></param>
+		/// <param name="UserType"></param>
+		/// <param name="Status"></param>
+		/// <param name="ErrorID"></param>
+		/// <param name="ErrorMsg"></param>
+		/// <param name="InvestUnitID"></param>
+		/// <param name="reserve2"></param>
+		/// <param name="MacAddress"></param>
+		/// <param name="InstrumentID"></param>
+		/// <param name="IPAddress"></param>
+		/// <returns></returns>
+		public IntPtr ReqParkedOrderAction(string BrokerID = "",string InvestorID = "",int OrderActionRef = 0,string OrderRef = "",int RequestID = 0,int FrontID = 0,int SessionID = 0,string ExchangeID = "",string OrderSysID = "",TThostFtdcActionFlagType ActionFlag = TThostFtdcActionFlagType.THOST_FTDC_AF_Delete,double LimitPrice = 0.0,int VolumeChange = 0,string UserID = "",string reserve1 = "",string ParkedOrderActionID = "",TThostFtdcUserTypeType UserType = TThostFtdcUserTypeType.THOST_FTDC_UT_Investor,TThostFtdcParkedOrderStatusType Status = TThostFtdcParkedOrderStatusType.THOST_FTDC_PAOS_NotSend,int ErrorID = 0,string ErrorMsg = "",string InvestUnitID = "",string reserve2 = "",string MacAddress = "",string InstrumentID = "",string IPAddress = "")
         {
 			CThostFtdcParkedOrderActionField pParkedOrderAction = new CThostFtdcParkedOrderActionField
 			{
@@ -612,9 +881,31 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqParkedOrderAction", typeof(DeleReqParkedOrderAction)) as DeleReqParkedOrderAction)(_api, ref pParkedOrderAction, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqOrderAction(string BrokerID = "",string InvestorID = "",int OrderActionRef = 0,string OrderRef = "",int RequestID = 0,int FrontID = 0,int SessionID = 0,string ExchangeID = "",string OrderSysID = "",TThostFtdcActionFlagType ActionFlag = TThostFtdcActionFlagType.THOST_FTDC_AF_Delete,double LimitPrice = 0.0,int VolumeChange = 0,string UserID = "",string reserve1 = "",string InvestUnitID = "",string reserve2 = "",string MacAddress = "",string InstrumentID = "",string IPAddress = "")
+		/// <summary>
+		/// 报单操作请求
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="OrderActionRef"></param>
+		/// <param name="OrderRef"></param>
+		/// <param name="RequestID"></param>
+		/// <param name="FrontID"></param>
+		/// <param name="SessionID"></param>
+		/// <param name="ExchangeID"></param>
+		/// <param name="OrderSysID"></param>
+		/// <param name="ActionFlag"></param>
+		/// <param name="LimitPrice"></param>
+		/// <param name="VolumeChange"></param>
+		/// <param name="UserID"></param>
+		/// <param name="reserve1"></param>
+		/// <param name="InvestUnitID"></param>
+		/// <param name="reserve2"></param>
+		/// <param name="MacAddress"></param>
+		/// <param name="InstrumentID"></param>
+		/// <param name="IPAddress"></param>
+		/// <returns></returns>
+		public IntPtr ReqOrderAction(string BrokerID = "",string InvestorID = "",int OrderActionRef = 0,string OrderRef = "",int RequestID = 0,int FrontID = 0,int SessionID = 0,string ExchangeID = "",string OrderSysID = "",TThostFtdcActionFlagType ActionFlag = TThostFtdcActionFlagType.THOST_FTDC_AF_Delete,double LimitPrice = 0.0,int VolumeChange = 0,string UserID = "",string reserve1 = "",string InvestUnitID = "",string reserve2 = "",string MacAddress = "",string InstrumentID = "",string IPAddress = "")
         {
 			CThostFtdcInputOrderActionField pInputOrderAction = new CThostFtdcInputOrderActionField
 			{
@@ -640,9 +931,22 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqOrderAction", typeof(DeleReqOrderAction)) as DeleReqOrderAction)(_api, ref pInputOrderAction, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryMaxOrderVolume(string BrokerID = "",string InvestorID = "",string reserve1 = "",TThostFtdcDirectionType Direction = TThostFtdcDirectionType.THOST_FTDC_D_Buy,TThostFtdcOffsetFlagType OffsetFlag = TThostFtdcOffsetFlagType.THOST_FTDC_OF_Open,TThostFtdcHedgeFlagType HedgeFlag = TThostFtdcHedgeFlagType.THOST_FTDC_HF_Speculation,int MaxVolume = 0,string ExchangeID = "",string InvestUnitID = "",string InstrumentID = "")
+		/// <summary>
+		/// 查询最大报单数量请求
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="reserve1"></param>
+		/// <param name="Direction"></param>
+		/// <param name="OffsetFlag"></param>
+		/// <param name="HedgeFlag"></param>
+		/// <param name="MaxVolume"></param>
+		/// <param name="ExchangeID"></param>
+		/// <param name="InvestUnitID"></param>
+		/// <param name="InstrumentID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryMaxOrderVolume(string BrokerID = "",string InvestorID = "",string reserve1 = "",TThostFtdcDirectionType Direction = TThostFtdcDirectionType.THOST_FTDC_D_Buy,TThostFtdcOffsetFlagType OffsetFlag = TThostFtdcOffsetFlagType.THOST_FTDC_OF_Open,TThostFtdcHedgeFlagType HedgeFlag = TThostFtdcHedgeFlagType.THOST_FTDC_HF_Speculation,int MaxVolume = 0,string ExchangeID = "",string InvestUnitID = "",string InstrumentID = "")
         {
 			CThostFtdcQryMaxOrderVolumeField pQryMaxOrderVolume = new CThostFtdcQryMaxOrderVolumeField
 			{
@@ -659,9 +963,19 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQryMaxOrderVolume", typeof(DeleReqQryMaxOrderVolume)) as DeleReqQryMaxOrderVolume)(_api, ref pQryMaxOrderVolume, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqSettlementInfoConfirm(string BrokerID = "",string InvestorID = "",string ConfirmDate = "",string ConfirmTime = "",int SettlementID = 0,string AccountID = "",string CurrencyID = "")
+		/// <summary>
+		/// 投资者结算结果确认
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="ConfirmDate"></param>
+		/// <param name="ConfirmTime"></param>
+		/// <param name="SettlementID"></param>
+		/// <param name="AccountID"></param>
+		/// <param name="CurrencyID"></param>
+		/// <returns></returns>
+		public IntPtr ReqSettlementInfoConfirm(string BrokerID = "",string InvestorID = "",string ConfirmDate = "",string ConfirmTime = "",int SettlementID = 0,string AccountID = "",string CurrencyID = "")
         {
 			CThostFtdcSettlementInfoConfirmField pSettlementInfoConfirm = new CThostFtdcSettlementInfoConfirmField
 			{
@@ -675,9 +989,16 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqSettlementInfoConfirm", typeof(DeleReqSettlementInfoConfirm)) as DeleReqSettlementInfoConfirm)(_api, ref pSettlementInfoConfirm, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqRemoveParkedOrder(string BrokerID = "",string InvestorID = "",string ParkedOrderID = "",string InvestUnitID = "")
+		/// <summary>
+		/// 请求删除预埋单
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="ParkedOrderID"></param>
+		/// <param name="InvestUnitID"></param>
+		/// <returns></returns>
+		public IntPtr ReqRemoveParkedOrder(string BrokerID = "",string InvestorID = "",string ParkedOrderID = "",string InvestUnitID = "")
         {
 			CThostFtdcRemoveParkedOrderField pRemoveParkedOrder = new CThostFtdcRemoveParkedOrderField
 			{
@@ -688,9 +1009,16 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqRemoveParkedOrder", typeof(DeleReqRemoveParkedOrder)) as DeleReqRemoveParkedOrder)(_api, ref pRemoveParkedOrder, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqRemoveParkedOrderAction(string BrokerID = "",string InvestorID = "",string ParkedOrderActionID = "",string InvestUnitID = "")
+		/// <summary>
+		/// 请求删除预埋撤单
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="ParkedOrderActionID"></param>
+		/// <param name="InvestUnitID"></param>
+		/// <returns></returns>
+		public IntPtr ReqRemoveParkedOrderAction(string BrokerID = "",string InvestorID = "",string ParkedOrderActionID = "",string InvestUnitID = "")
         {
 			CThostFtdcRemoveParkedOrderActionField pRemoveParkedOrderAction = new CThostFtdcRemoveParkedOrderActionField
 			{
@@ -701,9 +1029,35 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqRemoveParkedOrderAction", typeof(DeleReqRemoveParkedOrderAction)) as DeleReqRemoveParkedOrderAction)(_api, ref pRemoveParkedOrderAction, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqExecOrderInsert(string BrokerID = "",string InvestorID = "",string reserve1 = "",string ExecOrderRef = "",string UserID = "",int Volume = 0,int RequestID = 0,string BusinessUnit = "",TThostFtdcOffsetFlagType OffsetFlag = TThostFtdcOffsetFlagType.THOST_FTDC_OF_Open,TThostFtdcHedgeFlagType HedgeFlag = TThostFtdcHedgeFlagType.THOST_FTDC_HF_Speculation,TThostFtdcActionTypeType ActionType = TThostFtdcActionTypeType.THOST_FTDC_ACTP_Exec,TThostFtdcPosiDirectionType PosiDirection = TThostFtdcPosiDirectionType.THOST_FTDC_PD_Net,TThostFtdcExecOrderPositionFlagType ReservePositionFlag = TThostFtdcExecOrderPositionFlagType.THOST_FTDC_EOPF_Reserve,TThostFtdcExecOrderCloseFlagType CloseFlag = TThostFtdcExecOrderCloseFlagType.THOST_FTDC_EOCF_AutoClose,string ExchangeID = "",string InvestUnitID = "",string AccountID = "",string CurrencyID = "",string ClientID = "",string reserve2 = "",string MacAddress = "",string InstrumentID = "",string IPAddress = "")
+		/// <summary>
+		/// 执行宣告录入请求
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="reserve1"></param>
+		/// <param name="ExecOrderRef"></param>
+		/// <param name="UserID"></param>
+		/// <param name="Volume"></param>
+		/// <param name="RequestID"></param>
+		/// <param name="BusinessUnit"></param>
+		/// <param name="OffsetFlag"></param>
+		/// <param name="HedgeFlag"></param>
+		/// <param name="ActionType"></param>
+		/// <param name="PosiDirection"></param>
+		/// <param name="ReservePositionFlag"></param>
+		/// <param name="CloseFlag"></param>
+		/// <param name="ExchangeID"></param>
+		/// <param name="InvestUnitID"></param>
+		/// <param name="AccountID"></param>
+		/// <param name="CurrencyID"></param>
+		/// <param name="ClientID"></param>
+		/// <param name="reserve2"></param>
+		/// <param name="MacAddress"></param>
+		/// <param name="InstrumentID"></param>
+		/// <param name="IPAddress"></param>
+		/// <returns></returns>
+		public IntPtr ReqExecOrderInsert(string BrokerID = "",string InvestorID = "",string reserve1 = "",string ExecOrderRef = "",string UserID = "",int Volume = 0,int RequestID = 0,string BusinessUnit = "",TThostFtdcOffsetFlagType OffsetFlag = TThostFtdcOffsetFlagType.THOST_FTDC_OF_Open,TThostFtdcHedgeFlagType HedgeFlag = TThostFtdcHedgeFlagType.THOST_FTDC_HF_Speculation,TThostFtdcActionTypeType ActionType = TThostFtdcActionTypeType.THOST_FTDC_ACTP_Exec,TThostFtdcPosiDirectionType PosiDirection = TThostFtdcPosiDirectionType.THOST_FTDC_PD_Net,TThostFtdcExecOrderPositionFlagType ReservePositionFlag = TThostFtdcExecOrderPositionFlagType.THOST_FTDC_EOPF_Reserve,TThostFtdcExecOrderCloseFlagType CloseFlag = TThostFtdcExecOrderCloseFlagType.THOST_FTDC_EOCF_AutoClose,string ExchangeID = "",string InvestUnitID = "",string AccountID = "",string CurrencyID = "",string ClientID = "",string reserve2 = "",string MacAddress = "",string InstrumentID = "",string IPAddress = "")
         {
 			CThostFtdcInputExecOrderField pInputExecOrder = new CThostFtdcInputExecOrderField
 			{
@@ -733,9 +1087,29 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqExecOrderInsert", typeof(DeleReqExecOrderInsert)) as DeleReqExecOrderInsert)(_api, ref pInputExecOrder, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqExecOrderAction(string BrokerID = "",string InvestorID = "",int ExecOrderActionRef = 0,string ExecOrderRef = "",int RequestID = 0,int FrontID = 0,int SessionID = 0,string ExchangeID = "",string ExecOrderSysID = "",TThostFtdcActionFlagType ActionFlag = TThostFtdcActionFlagType.THOST_FTDC_AF_Delete,string UserID = "",string reserve1 = "",string InvestUnitID = "",string reserve2 = "",string MacAddress = "",string InstrumentID = "",string IPAddress = "")
+		/// <summary>
+		/// 执行宣告操作请求
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="ExecOrderActionRef"></param>
+		/// <param name="ExecOrderRef"></param>
+		/// <param name="RequestID"></param>
+		/// <param name="FrontID"></param>
+		/// <param name="SessionID"></param>
+		/// <param name="ExchangeID"></param>
+		/// <param name="ExecOrderSysID"></param>
+		/// <param name="ActionFlag"></param>
+		/// <param name="UserID"></param>
+		/// <param name="reserve1"></param>
+		/// <param name="InvestUnitID"></param>
+		/// <param name="reserve2"></param>
+		/// <param name="MacAddress"></param>
+		/// <param name="InstrumentID"></param>
+		/// <param name="IPAddress"></param>
+		/// <returns></returns>
+		public IntPtr ReqExecOrderAction(string BrokerID = "",string InvestorID = "",int ExecOrderActionRef = 0,string ExecOrderRef = "",int RequestID = 0,int FrontID = 0,int SessionID = 0,string ExchangeID = "",string ExecOrderSysID = "",TThostFtdcActionFlagType ActionFlag = TThostFtdcActionFlagType.THOST_FTDC_AF_Delete,string UserID = "",string reserve1 = "",string InvestUnitID = "",string reserve2 = "",string MacAddress = "",string InstrumentID = "",string IPAddress = "")
         {
 			CThostFtdcInputExecOrderActionField pInputExecOrderAction = new CThostFtdcInputExecOrderActionField
 			{
@@ -759,9 +1133,23 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqExecOrderAction", typeof(DeleReqExecOrderAction)) as DeleReqExecOrderAction)(_api, ref pInputExecOrderAction, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqForQuoteInsert(string BrokerID = "",string InvestorID = "",string reserve1 = "",string ForQuoteRef = "",string UserID = "",string ExchangeID = "",string InvestUnitID = "",string reserve2 = "",string MacAddress = "",string InstrumentID = "",string IPAddress = "")
+		/// <summary>
+		/// ///询价录入请求
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="reserve1"></param>
+		/// <param name="ForQuoteRef"></param>
+		/// <param name="UserID"></param>
+		/// <param name="ExchangeID"></param>
+		/// <param name="InvestUnitID"></param>
+		/// <param name="reserve2"></param>
+		/// <param name="MacAddress"></param>
+		/// <param name="InstrumentID"></param>
+		/// <param name="IPAddress"></param>
+		/// <returns></returns>
+		public IntPtr ReqForQuoteInsert(string BrokerID = "",string InvestorID = "",string reserve1 = "",string ForQuoteRef = "",string UserID = "",string ExchangeID = "",string InvestUnitID = "",string reserve2 = "",string MacAddress = "",string InstrumentID = "",string IPAddress = "")
         {
 			CThostFtdcInputForQuoteField pInputForQuote = new CThostFtdcInputForQuoteField
 			{
@@ -779,9 +1167,37 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqForQuoteInsert", typeof(DeleReqForQuoteInsert)) as DeleReqForQuoteInsert)(_api, ref pInputForQuote, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQuoteInsert(string BrokerID = "",string InvestorID = "",string reserve1 = "",string QuoteRef = "",string UserID = "",double AskPrice = 0.0,double BidPrice = 0.0,int AskVolume = 0,int BidVolume = 0,int RequestID = 0,string BusinessUnit = "",TThostFtdcOffsetFlagType AskOffsetFlag = TThostFtdcOffsetFlagType.THOST_FTDC_OF_Open,TThostFtdcOffsetFlagType BidOffsetFlag = TThostFtdcOffsetFlagType.THOST_FTDC_OF_Open,TThostFtdcHedgeFlagType AskHedgeFlag = TThostFtdcHedgeFlagType.THOST_FTDC_HF_Speculation,TThostFtdcHedgeFlagType BidHedgeFlag = TThostFtdcHedgeFlagType.THOST_FTDC_HF_Speculation,string AskOrderRef = "",string BidOrderRef = "",string ForQuoteSysID = "",string ExchangeID = "",string InvestUnitID = "",string ClientID = "",string reserve2 = "",string MacAddress = "",string InstrumentID = "",string IPAddress = "")
+		/// <summary>
+		/// 报价录入请求
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="reserve1"></param>
+		/// <param name="QuoteRef"></param>
+		/// <param name="UserID"></param>
+		/// <param name="AskPrice"></param>
+		/// <param name="BidPrice"></param>
+		/// <param name="AskVolume"></param>
+		/// <param name="BidVolume"></param>
+		/// <param name="RequestID"></param>
+		/// <param name="BusinessUnit"></param>
+		/// <param name="AskOffsetFlag"></param>
+		/// <param name="BidOffsetFlag"></param>
+		/// <param name="AskHedgeFlag"></param>
+		/// <param name="BidHedgeFlag"></param>
+		/// <param name="AskOrderRef"></param>
+		/// <param name="BidOrderRef"></param>
+		/// <param name="ForQuoteSysID"></param>
+		/// <param name="ExchangeID"></param>
+		/// <param name="InvestUnitID"></param>
+		/// <param name="ClientID"></param>
+		/// <param name="reserve2"></param>
+		/// <param name="MacAddress"></param>
+		/// <param name="InstrumentID"></param>
+		/// <param name="IPAddress"></param>
+		/// <returns></returns>
+		public IntPtr ReqQuoteInsert(string BrokerID = "",string InvestorID = "",string reserve1 = "",string QuoteRef = "",string UserID = "",double AskPrice = 0.0,double BidPrice = 0.0,int AskVolume = 0,int BidVolume = 0,int RequestID = 0,string BusinessUnit = "",TThostFtdcOffsetFlagType AskOffsetFlag = TThostFtdcOffsetFlagType.THOST_FTDC_OF_Open,TThostFtdcOffsetFlagType BidOffsetFlag = TThostFtdcOffsetFlagType.THOST_FTDC_OF_Open,TThostFtdcHedgeFlagType AskHedgeFlag = TThostFtdcHedgeFlagType.THOST_FTDC_HF_Speculation,TThostFtdcHedgeFlagType BidHedgeFlag = TThostFtdcHedgeFlagType.THOST_FTDC_HF_Speculation,string AskOrderRef = "",string BidOrderRef = "",string ForQuoteSysID = "",string ExchangeID = "",string InvestUnitID = "",string ClientID = "",string reserve2 = "",string MacAddress = "",string InstrumentID = "",string IPAddress = "")
         {
 			CThostFtdcInputQuoteField pInputQuote = new CThostFtdcInputQuoteField
 			{
@@ -813,9 +1229,30 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQuoteInsert", typeof(DeleReqQuoteInsert)) as DeleReqQuoteInsert)(_api, ref pInputQuote, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQuoteAction(string BrokerID = "",string InvestorID = "",int QuoteActionRef = 0,string QuoteRef = "",int RequestID = 0,int FrontID = 0,int SessionID = 0,string ExchangeID = "",string QuoteSysID = "",TThostFtdcActionFlagType ActionFlag = TThostFtdcActionFlagType.THOST_FTDC_AF_Delete,string UserID = "",string reserve1 = "",string InvestUnitID = "",string ClientID = "",string reserve2 = "",string MacAddress = "",string InstrumentID = "",string IPAddress = "")
+		/// <summary>
+		/// 报价操作请求
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="QuoteActionRef"></param>
+		/// <param name="QuoteRef"></param>
+		/// <param name="RequestID"></param>
+		/// <param name="FrontID"></param>
+		/// <param name="SessionID"></param>
+		/// <param name="ExchangeID"></param>
+		/// <param name="QuoteSysID"></param>
+		/// <param name="ActionFlag"></param>
+		/// <param name="UserID"></param>
+		/// <param name="reserve1"></param>
+		/// <param name="InvestUnitID"></param>
+		/// <param name="ClientID"></param>
+		/// <param name="reserve2"></param>
+		/// <param name="MacAddress"></param>
+		/// <param name="InstrumentID"></param>
+		/// <param name="IPAddress"></param>
+		/// <returns></returns>
+		public IntPtr ReqQuoteAction(string BrokerID = "",string InvestorID = "",int QuoteActionRef = 0,string QuoteRef = "",int RequestID = 0,int FrontID = 0,int SessionID = 0,string ExchangeID = "",string QuoteSysID = "",TThostFtdcActionFlagType ActionFlag = TThostFtdcActionFlagType.THOST_FTDC_AF_Delete,string UserID = "",string reserve1 = "",string InvestUnitID = "",string ClientID = "",string reserve2 = "",string MacAddress = "",string InstrumentID = "",string IPAddress = "")
         {
 			CThostFtdcInputQuoteActionField pInputQuoteAction = new CThostFtdcInputQuoteActionField
 			{
@@ -840,9 +1277,24 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQuoteAction", typeof(DeleReqQuoteAction)) as DeleReqQuoteAction)(_api, ref pInputQuoteAction, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqBatchOrderAction(string BrokerID = "",string InvestorID = "",int OrderActionRef = 0,int RequestID = 0,int FrontID = 0,int SessionID = 0,string ExchangeID = "",string UserID = "",string InvestUnitID = "",string reserve1 = "",string MacAddress = "",string IPAddress = "")
+		/// <summary>
+		/// 批量报单操作请求
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="OrderActionRef"></param>
+		/// <param name="RequestID"></param>
+		/// <param name="FrontID"></param>
+		/// <param name="SessionID"></param>
+		/// <param name="ExchangeID"></param>
+		/// <param name="UserID"></param>
+		/// <param name="InvestUnitID"></param>
+		/// <param name="reserve1"></param>
+		/// <param name="MacAddress"></param>
+		/// <param name="IPAddress"></param>
+		/// <returns></returns>
+		public IntPtr ReqBatchOrderAction(string BrokerID = "",string InvestorID = "",int OrderActionRef = 0,int RequestID = 0,int FrontID = 0,int SessionID = 0,string ExchangeID = "",string UserID = "",string InvestUnitID = "",string reserve1 = "",string MacAddress = "",string IPAddress = "")
         {
 			CThostFtdcInputBatchOrderActionField pInputBatchOrderAction = new CThostFtdcInputBatchOrderActionField
 			{
@@ -861,9 +1313,31 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqBatchOrderAction", typeof(DeleReqBatchOrderAction)) as DeleReqBatchOrderAction)(_api, ref pInputBatchOrderAction, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqOptionSelfCloseInsert(string BrokerID = "",string InvestorID = "",string reserve1 = "",string OptionSelfCloseRef = "",string UserID = "",int Volume = 0,int RequestID = 0,string BusinessUnit = "",TThostFtdcHedgeFlagType HedgeFlag = TThostFtdcHedgeFlagType.THOST_FTDC_HF_Speculation,TThostFtdcOptSelfCloseFlagType OptSelfCloseFlag = TThostFtdcOptSelfCloseFlagType.THOST_FTDC_OSCF_CloseSelfOptionPosition,string ExchangeID = "",string InvestUnitID = "",string AccountID = "",string CurrencyID = "",string ClientID = "",string reserve2 = "",string MacAddress = "",string InstrumentID = "",string IPAddress = "")
+		/// <summary>
+		/// 期权自对冲录入请求
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="reserve1"></param>
+		/// <param name="OptionSelfCloseRef"></param>
+		/// <param name="UserID"></param>
+		/// <param name="Volume"></param>
+		/// <param name="RequestID"></param>
+		/// <param name="BusinessUnit"></param>
+		/// <param name="HedgeFlag"></param>
+		/// <param name="OptSelfCloseFlag"></param>
+		/// <param name="ExchangeID"></param>
+		/// <param name="InvestUnitID"></param>
+		/// <param name="AccountID"></param>
+		/// <param name="CurrencyID"></param>
+		/// <param name="ClientID"></param>
+		/// <param name="reserve2"></param>
+		/// <param name="MacAddress"></param>
+		/// <param name="InstrumentID"></param>
+		/// <param name="IPAddress"></param>
+		/// <returns></returns>
+		public IntPtr ReqOptionSelfCloseInsert(string BrokerID = "",string InvestorID = "",string reserve1 = "",string OptionSelfCloseRef = "",string UserID = "",int Volume = 0,int RequestID = 0,string BusinessUnit = "",TThostFtdcHedgeFlagType HedgeFlag = TThostFtdcHedgeFlagType.THOST_FTDC_HF_Speculation,TThostFtdcOptSelfCloseFlagType OptSelfCloseFlag = TThostFtdcOptSelfCloseFlagType.THOST_FTDC_OSCF_CloseSelfOptionPosition,string ExchangeID = "",string InvestUnitID = "",string AccountID = "",string CurrencyID = "",string ClientID = "",string reserve2 = "",string MacAddress = "",string InstrumentID = "",string IPAddress = "")
         {
 			CThostFtdcInputOptionSelfCloseField pInputOptionSelfClose = new CThostFtdcInputOptionSelfCloseField
 			{
@@ -889,9 +1363,29 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqOptionSelfCloseInsert", typeof(DeleReqOptionSelfCloseInsert)) as DeleReqOptionSelfCloseInsert)(_api, ref pInputOptionSelfClose, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqOptionSelfCloseAction(string BrokerID = "",string InvestorID = "",int OptionSelfCloseActionRef = 0,string OptionSelfCloseRef = "",int RequestID = 0,int FrontID = 0,int SessionID = 0,string ExchangeID = "",string OptionSelfCloseSysID = "",TThostFtdcActionFlagType ActionFlag = TThostFtdcActionFlagType.THOST_FTDC_AF_Delete,string UserID = "",string reserve1 = "",string InvestUnitID = "",string reserve2 = "",string MacAddress = "",string InstrumentID = "",string IPAddress = "")
+		/// <summary>
+		/// 期权自对冲操作请求
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="OptionSelfCloseActionRef"></param>
+		/// <param name="OptionSelfCloseRef"></param>
+		/// <param name="RequestID"></param>
+		/// <param name="FrontID"></param>
+		/// <param name="SessionID"></param>
+		/// <param name="ExchangeID"></param>
+		/// <param name="OptionSelfCloseSysID"></param>
+		/// <param name="ActionFlag"></param>
+		/// <param name="UserID"></param>
+		/// <param name="reserve1"></param>
+		/// <param name="InvestUnitID"></param>
+		/// <param name="reserve2"></param>
+		/// <param name="MacAddress"></param>
+		/// <param name="InstrumentID"></param>
+		/// <param name="IPAddress"></param>
+		/// <returns></returns>
+		public IntPtr ReqOptionSelfCloseAction(string BrokerID = "",string InvestorID = "",int OptionSelfCloseActionRef = 0,string OptionSelfCloseRef = "",int RequestID = 0,int FrontID = 0,int SessionID = 0,string ExchangeID = "",string OptionSelfCloseSysID = "",TThostFtdcActionFlagType ActionFlag = TThostFtdcActionFlagType.THOST_FTDC_AF_Delete,string UserID = "",string reserve1 = "",string InvestUnitID = "",string reserve2 = "",string MacAddress = "",string InstrumentID = "",string IPAddress = "")
         {
 			CThostFtdcInputOptionSelfCloseActionField pInputOptionSelfCloseAction = new CThostFtdcInputOptionSelfCloseActionField
 			{
@@ -915,9 +1409,29 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqOptionSelfCloseAction", typeof(DeleReqOptionSelfCloseAction)) as DeleReqOptionSelfCloseAction)(_api, ref pInputOptionSelfCloseAction, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqCombActionInsert(string BrokerID = "",string InvestorID = "",string reserve1 = "",string CombActionRef = "",string UserID = "",TThostFtdcDirectionType Direction = TThostFtdcDirectionType.THOST_FTDC_D_Buy,int Volume = 0,TThostFtdcCombDirectionType CombDirection = TThostFtdcCombDirectionType.THOST_FTDC_CMDR_Comb,TThostFtdcHedgeFlagType HedgeFlag = TThostFtdcHedgeFlagType.THOST_FTDC_HF_Speculation,string ExchangeID = "",string reserve2 = "",string MacAddress = "",string InvestUnitID = "",int FrontID = 0,int SessionID = 0,string InstrumentID = "",string IPAddress = "")
+		/// <summary>
+		/// 申请组合录入请求
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="reserve1"></param>
+		/// <param name="CombActionRef"></param>
+		/// <param name="UserID"></param>
+		/// <param name="Direction"></param>
+		/// <param name="Volume"></param>
+		/// <param name="CombDirection"></param>
+		/// <param name="HedgeFlag"></param>
+		/// <param name="ExchangeID"></param>
+		/// <param name="reserve2"></param>
+		/// <param name="MacAddress"></param>
+		/// <param name="InvestUnitID"></param>
+		/// <param name="FrontID"></param>
+		/// <param name="SessionID"></param>
+		/// <param name="InstrumentID"></param>
+		/// <param name="IPAddress"></param>
+		/// <returns></returns>
+		public IntPtr ReqCombActionInsert(string BrokerID = "",string InvestorID = "",string reserve1 = "",string CombActionRef = "",string UserID = "",TThostFtdcDirectionType Direction = TThostFtdcDirectionType.THOST_FTDC_D_Buy,int Volume = 0,TThostFtdcCombDirectionType CombDirection = TThostFtdcCombDirectionType.THOST_FTDC_CMDR_Comb,TThostFtdcHedgeFlagType HedgeFlag = TThostFtdcHedgeFlagType.THOST_FTDC_HF_Speculation,string ExchangeID = "",string reserve2 = "",string MacAddress = "",string InvestUnitID = "",int FrontID = 0,int SessionID = 0,string InstrumentID = "",string IPAddress = "")
         {
 			CThostFtdcInputCombActionField pInputCombAction = new CThostFtdcInputCombActionField
 			{
@@ -941,9 +1455,21 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqCombActionInsert", typeof(DeleReqCombActionInsert)) as DeleReqCombActionInsert)(_api, ref pInputCombAction, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryOrder(string BrokerID = "",string InvestorID = "",string reserve1 = "",string ExchangeID = "",string OrderSysID = "",string InsertTimeStart = "",string InsertTimeEnd = "",string InvestUnitID = "",string InstrumentID = "")
+		/// <summary>
+		/// 请求查询报单
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="reserve1"></param>
+		/// <param name="ExchangeID"></param>
+		/// <param name="OrderSysID"></param>
+		/// <param name="InsertTimeStart"></param>
+		/// <param name="InsertTimeEnd"></param>
+		/// <param name="InvestUnitID"></param>
+		/// <param name="InstrumentID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryOrder(string BrokerID = "",string InvestorID = "",string reserve1 = "",string ExchangeID = "",string OrderSysID = "",string InsertTimeStart = "",string InsertTimeEnd = "",string InvestUnitID = "",string InstrumentID = "")
         {
 			CThostFtdcQryOrderField pQryOrder = new CThostFtdcQryOrderField
 			{
@@ -959,9 +1485,21 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQryOrder", typeof(DeleReqQryOrder)) as DeleReqQryOrder)(_api, ref pQryOrder, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryTrade(string BrokerID = "",string InvestorID = "",string reserve1 = "",string ExchangeID = "",string TradeID = "",string TradeTimeStart = "",string TradeTimeEnd = "",string InvestUnitID = "",string InstrumentID = "")
+		/// <summary>
+		/// 请求查询成交
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="reserve1"></param>
+		/// <param name="ExchangeID"></param>
+		/// <param name="TradeID"></param>
+		/// <param name="TradeTimeStart"></param>
+		/// <param name="TradeTimeEnd"></param>
+		/// <param name="InvestUnitID"></param>
+		/// <param name="InstrumentID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryTrade(string BrokerID = "",string InvestorID = "",string reserve1 = "",string ExchangeID = "",string TradeID = "",string TradeTimeStart = "",string TradeTimeEnd = "",string InvestUnitID = "",string InstrumentID = "")
         {
 			CThostFtdcQryTradeField pQryTrade = new CThostFtdcQryTradeField
 			{
@@ -977,9 +1515,18 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQryTrade", typeof(DeleReqQryTrade)) as DeleReqQryTrade)(_api, ref pQryTrade, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryInvestorPosition(string BrokerID = "",string InvestorID = "",string reserve1 = "",string ExchangeID = "",string InvestUnitID = "",string InstrumentID = "")
+		/// <summary>
+		/// 请求查询投资者持仓
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="reserve1"></param>
+		/// <param name="ExchangeID"></param>
+		/// <param name="InvestUnitID"></param>
+		/// <param name="InstrumentID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryInvestorPosition(string BrokerID = "",string InvestorID = "",string reserve1 = "",string ExchangeID = "",string InvestUnitID = "",string InstrumentID = "")
         {
 			CThostFtdcQryInvestorPositionField pQryInvestorPosition = new CThostFtdcQryInvestorPositionField
 			{
@@ -992,9 +1539,17 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQryInvestorPosition", typeof(DeleReqQryInvestorPosition)) as DeleReqQryInvestorPosition)(_api, ref pQryInvestorPosition, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryTradingAccount(string BrokerID = "",string InvestorID = "",string CurrencyID = "",TThostFtdcBizTypeType BizType = TThostFtdcBizTypeType.THOST_FTDC_BZTP_Future,string AccountID = "")
+		/// <summary>
+		/// 请求查询资金账户
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="CurrencyID"></param>
+		/// <param name="BizType"></param>
+		/// <param name="AccountID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryTradingAccount(string BrokerID = "",string InvestorID = "",string CurrencyID = "",TThostFtdcBizTypeType BizType = TThostFtdcBizTypeType.THOST_FTDC_BZTP_Future,string AccountID = "")
         {
 			CThostFtdcQryTradingAccountField pQryTradingAccount = new CThostFtdcQryTradingAccountField
 			{
@@ -1006,9 +1561,14 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQryTradingAccount", typeof(DeleReqQryTradingAccount)) as DeleReqQryTradingAccount)(_api, ref pQryTradingAccount, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryInvestor(string BrokerID = "",string InvestorID = "")
+		/// <summary>
+		/// 请求查询投资者
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryInvestor(string BrokerID = "",string InvestorID = "")
         {
 			CThostFtdcQryInvestorField pQryInvestor = new CThostFtdcQryInvestorField
 			{
@@ -1017,9 +1577,18 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQryInvestor", typeof(DeleReqQryInvestor)) as DeleReqQryInvestor)(_api, ref pQryInvestor, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryTradingCode(string BrokerID = "",string InvestorID = "",string ExchangeID = "",string ClientID = "",TThostFtdcClientIDTypeType ClientIDType = TThostFtdcClientIDTypeType.THOST_FTDC_CIDT_Speculation,string InvestUnitID = "")
+		/// <summary>
+		/// 请求查询交易编码
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="ExchangeID"></param>
+		/// <param name="ClientID"></param>
+		/// <param name="ClientIDType"></param>
+		/// <param name="InvestUnitID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryTradingCode(string BrokerID = "",string InvestorID = "",string ExchangeID = "",string ClientID = "",TThostFtdcClientIDTypeType ClientIDType = TThostFtdcClientIDTypeType.THOST_FTDC_CIDT_Speculation,string InvestUnitID = "")
         {
 			CThostFtdcQryTradingCodeField pQryTradingCode = new CThostFtdcQryTradingCodeField
 			{
@@ -1032,9 +1601,19 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQryTradingCode", typeof(DeleReqQryTradingCode)) as DeleReqQryTradingCode)(_api, ref pQryTradingCode, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryInstrumentMarginRate(string BrokerID = "",string InvestorID = "",string reserve1 = "",TThostFtdcHedgeFlagType HedgeFlag = TThostFtdcHedgeFlagType.THOST_FTDC_HF_Speculation,string ExchangeID = "",string InvestUnitID = "",string InstrumentID = "")
+		/// <summary>
+		/// 请求查询合约保证金率
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="reserve1"></param>
+		/// <param name="HedgeFlag"></param>
+		/// <param name="ExchangeID"></param>
+		/// <param name="InvestUnitID"></param>
+		/// <param name="InstrumentID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryInstrumentMarginRate(string BrokerID = "",string InvestorID = "",string reserve1 = "",TThostFtdcHedgeFlagType HedgeFlag = TThostFtdcHedgeFlagType.THOST_FTDC_HF_Speculation,string ExchangeID = "",string InvestUnitID = "",string InstrumentID = "")
         {
 			CThostFtdcQryInstrumentMarginRateField pQryInstrumentMarginRate = new CThostFtdcQryInstrumentMarginRateField
 			{
@@ -1048,9 +1627,18 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQryInstrumentMarginRate", typeof(DeleReqQryInstrumentMarginRate)) as DeleReqQryInstrumentMarginRate)(_api, ref pQryInstrumentMarginRate, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryInstrumentCommissionRate(string BrokerID = "",string InvestorID = "",string reserve1 = "",string ExchangeID = "",string InvestUnitID = "",string InstrumentID = "")
+		/// <summary>
+		/// 请求查询合约手续费率
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="reserve1"></param>
+		/// <param name="ExchangeID"></param>
+		/// <param name="InvestUnitID"></param>
+		/// <param name="InstrumentID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryInstrumentCommissionRate(string BrokerID = "",string InvestorID = "",string reserve1 = "",string ExchangeID = "",string InvestUnitID = "",string InstrumentID = "")
         {
 			CThostFtdcQryInstrumentCommissionRateField pQryInstrumentCommissionRate = new CThostFtdcQryInstrumentCommissionRateField
 			{
@@ -1063,9 +1651,13 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQryInstrumentCommissionRate", typeof(DeleReqQryInstrumentCommissionRate)) as DeleReqQryInstrumentCommissionRate)(_api, ref pQryInstrumentCommissionRate, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryExchange(string ExchangeID = "")
+		/// <summary>
+		/// 请求查询交易所
+		/// </summary>
+		/// <param name="ExchangeID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryExchange(string ExchangeID = "")
         {
 			CThostFtdcQryExchangeField pQryExchange = new CThostFtdcQryExchangeField
 			{
@@ -1073,9 +1665,16 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQryExchange", typeof(DeleReqQryExchange)) as DeleReqQryExchange)(_api, ref pQryExchange, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryProduct(string reserve1 = "",TThostFtdcProductClassType ProductClass = TThostFtdcProductClassType.THOST_FTDC_PC_Futures,string ExchangeID = "",string ProductID = "")
+		/// <summary>
+		/// 请求查询产品
+		/// </summary>
+		/// <param name="reserve1"></param>
+		/// <param name="ProductClass"></param>
+		/// <param name="ExchangeID"></param>
+		/// <param name="ProductID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryProduct(string reserve1 = "",TThostFtdcProductClassType ProductClass = TThostFtdcProductClassType.THOST_FTDC_PC_Futures,string ExchangeID = "",string ProductID = "")
         {
 			CThostFtdcQryProductField pQryProduct = new CThostFtdcQryProductField
 			{
@@ -1086,9 +1685,19 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQryProduct", typeof(DeleReqQryProduct)) as DeleReqQryProduct)(_api, ref pQryProduct, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryInstrument(string reserve1 = "",string ExchangeID = "",string reserve2 = "",string reserve3 = "",string InstrumentID = "",string ExchangeInstID = "",string ProductID = "")
+		/// <summary>
+		/// 请求查询合约
+		/// </summary>
+		/// <param name="reserve1"></param>
+		/// <param name="ExchangeID"></param>
+		/// <param name="reserve2"></param>
+		/// <param name="reserve3"></param>
+		/// <param name="InstrumentID"></param>
+		/// <param name="ExchangeInstID"></param>
+		/// <param name="ProductID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryInstrument(string reserve1 = "",string ExchangeID = "",string reserve2 = "",string reserve3 = "",string InstrumentID = "",string ExchangeInstID = "",string ProductID = "")
         {
 			CThostFtdcQryInstrumentField pQryInstrument = new CThostFtdcQryInstrumentField
 			{
@@ -1102,9 +1711,15 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQryInstrument", typeof(DeleReqQryInstrument)) as DeleReqQryInstrument)(_api, ref pQryInstrument, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryDepthMarketData(string reserve1 = "",string ExchangeID = "",string InstrumentID = "")
+		/// <summary>
+		/// 请求查询行情
+		/// </summary>
+		/// <param name="reserve1"></param>
+		/// <param name="ExchangeID"></param>
+		/// <param name="InstrumentID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryDepthMarketData(string reserve1 = "",string ExchangeID = "",string InstrumentID = "")
         {
 			CThostFtdcQryDepthMarketDataField pQryDepthMarketData = new CThostFtdcQryDepthMarketDataField
 			{
@@ -1114,9 +1729,17 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQryDepthMarketData", typeof(DeleReqQryDepthMarketData)) as DeleReqQryDepthMarketData)(_api, ref pQryDepthMarketData, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQrySettlementInfo(string BrokerID = "",string InvestorID = "",string TradingDay = "",string AccountID = "",string CurrencyID = "")
+		/// <summary>
+		/// 请求查询投资者结算结果
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="TradingDay"></param>
+		/// <param name="AccountID"></param>
+		/// <param name="CurrencyID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQrySettlementInfo(string BrokerID = "",string InvestorID = "",string TradingDay = "",string AccountID = "",string CurrencyID = "")
         {
 			CThostFtdcQrySettlementInfoField pQrySettlementInfo = new CThostFtdcQrySettlementInfoField
 			{
@@ -1128,9 +1751,14 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQrySettlementInfo", typeof(DeleReqQrySettlementInfo)) as DeleReqQrySettlementInfo)(_api, ref pQrySettlementInfo, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryTransferBank(string BankID = "",string BankBrchID = "")
+		/// <summary>
+		/// 请求查询转帐银行
+		/// </summary>
+		/// <param name="BankID"></param>
+		/// <param name="BankBrchID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryTransferBank(string BankID = "",string BankBrchID = "")
         {
 			CThostFtdcQryTransferBankField pQryTransferBank = new CThostFtdcQryTransferBankField
 			{
@@ -1139,9 +1767,18 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQryTransferBank", typeof(DeleReqQryTransferBank)) as DeleReqQryTransferBank)(_api, ref pQryTransferBank, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryInvestorPositionDetail(string BrokerID = "",string InvestorID = "",string reserve1 = "",string ExchangeID = "",string InvestUnitID = "",string InstrumentID = "")
+		/// <summary>
+		/// 请求查询投资者持仓明细
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="reserve1"></param>
+		/// <param name="ExchangeID"></param>
+		/// <param name="InvestUnitID"></param>
+		/// <param name="InstrumentID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryInvestorPositionDetail(string BrokerID = "",string InvestorID = "",string reserve1 = "",string ExchangeID = "",string InvestUnitID = "",string InstrumentID = "")
         {
 			CThostFtdcQryInvestorPositionDetailField pQryInvestorPositionDetail = new CThostFtdcQryInvestorPositionDetailField
 			{
@@ -1154,9 +1791,13 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQryInvestorPositionDetail", typeof(DeleReqQryInvestorPositionDetail)) as DeleReqQryInvestorPositionDetail)(_api, ref pQryInvestorPositionDetail, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryNotice(string BrokerID = "")
+		/// <summary>
+		/// 请求查询客户通知
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryNotice(string BrokerID = "")
         {
 			CThostFtdcQryNoticeField pQryNotice = new CThostFtdcQryNoticeField
 			{
@@ -1164,9 +1805,16 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQryNotice", typeof(DeleReqQryNotice)) as DeleReqQryNotice)(_api, ref pQryNotice, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQrySettlementInfoConfirm(string BrokerID = "",string InvestorID = "",string AccountID = "",string CurrencyID = "")
+		/// <summary>
+		/// 请求查询结算信息确认
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="AccountID"></param>
+		/// <param name="CurrencyID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQrySettlementInfoConfirm(string BrokerID = "",string InvestorID = "",string AccountID = "",string CurrencyID = "")
         {
 			CThostFtdcQrySettlementInfoConfirmField pQrySettlementInfoConfirm = new CThostFtdcQrySettlementInfoConfirmField
 			{
@@ -1177,9 +1825,18 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQrySettlementInfoConfirm", typeof(DeleReqQrySettlementInfoConfirm)) as DeleReqQrySettlementInfoConfirm)(_api, ref pQrySettlementInfoConfirm, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryInvestorPositionCombineDetail(string BrokerID = "",string InvestorID = "",string reserve1 = "",string ExchangeID = "",string InvestUnitID = "",string CombInstrumentID = "")
+		/// <summary>
+		/// 请求查询投资者持仓明细
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="reserve1"></param>
+		/// <param name="ExchangeID"></param>
+		/// <param name="InvestUnitID"></param>
+		/// <param name="CombInstrumentID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryInvestorPositionCombineDetail(string BrokerID = "",string InvestorID = "",string reserve1 = "",string ExchangeID = "",string InvestUnitID = "",string CombInstrumentID = "")
         {
 			CThostFtdcQryInvestorPositionCombineDetailField pQryInvestorPositionCombineDetail = new CThostFtdcQryInvestorPositionCombineDetailField
 			{
@@ -1192,9 +1849,14 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQryInvestorPositionCombineDetail", typeof(DeleReqQryInvestorPositionCombineDetail)) as DeleReqQryInvestorPositionCombineDetail)(_api, ref pQryInvestorPositionCombineDetail, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryCFMMCTradingAccountKey(string BrokerID = "",string InvestorID = "")
+		/// <summary>
+		/// 请求查询保证金监管系统经纪公司资金账户密钥
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryCFMMCTradingAccountKey(string BrokerID = "",string InvestorID = "")
         {
 			CThostFtdcQryCFMMCTradingAccountKeyField pQryCFMMCTradingAccountKey = new CThostFtdcQryCFMMCTradingAccountKeyField
 			{
@@ -1203,9 +1865,18 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQryCFMMCTradingAccountKey", typeof(DeleReqQryCFMMCTradingAccountKey)) as DeleReqQryCFMMCTradingAccountKey)(_api, ref pQryCFMMCTradingAccountKey, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryEWarrantOffset(string BrokerID = "",string InvestorID = "",string ExchangeID = "",string reserve1 = "",string InvestUnitID = "",string InstrumentID = "")
+		/// <summary>
+		/// 请求查询仓单折抵信息
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="ExchangeID"></param>
+		/// <param name="reserve1"></param>
+		/// <param name="InvestUnitID"></param>
+		/// <param name="InstrumentID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryEWarrantOffset(string BrokerID = "",string InvestorID = "",string ExchangeID = "",string reserve1 = "",string InvestUnitID = "",string InstrumentID = "")
         {
 			CThostFtdcQryEWarrantOffsetField pQryEWarrantOffset = new CThostFtdcQryEWarrantOffsetField
 			{
@@ -1218,9 +1889,19 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQryEWarrantOffset", typeof(DeleReqQryEWarrantOffset)) as DeleReqQryEWarrantOffset)(_api, ref pQryEWarrantOffset, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryInvestorProductGroupMargin(string BrokerID = "",string InvestorID = "",string reserve1 = "",TThostFtdcHedgeFlagType HedgeFlag = TThostFtdcHedgeFlagType.THOST_FTDC_HF_Speculation,string ExchangeID = "",string InvestUnitID = "",string ProductGroupID = "")
+		/// <summary>
+		/// 请求查询投资者品种/跨品种保证金
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="reserve1"></param>
+		/// <param name="HedgeFlag"></param>
+		/// <param name="ExchangeID"></param>
+		/// <param name="InvestUnitID"></param>
+		/// <param name="ProductGroupID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryInvestorProductGroupMargin(string BrokerID = "",string InvestorID = "",string reserve1 = "",TThostFtdcHedgeFlagType HedgeFlag = TThostFtdcHedgeFlagType.THOST_FTDC_HF_Speculation,string ExchangeID = "",string InvestUnitID = "",string ProductGroupID = "")
         {
 			CThostFtdcQryInvestorProductGroupMarginField pQryInvestorProductGroupMargin = new CThostFtdcQryInvestorProductGroupMarginField
 			{
@@ -1234,9 +1915,17 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQryInvestorProductGroupMargin", typeof(DeleReqQryInvestorProductGroupMargin)) as DeleReqQryInvestorProductGroupMargin)(_api, ref pQryInvestorProductGroupMargin, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryExchangeMarginRate(string BrokerID = "",string reserve1 = "",TThostFtdcHedgeFlagType HedgeFlag = TThostFtdcHedgeFlagType.THOST_FTDC_HF_Speculation,string ExchangeID = "",string InstrumentID = "")
+		/// <summary>
+		/// 请求查询交易所保证金率
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="reserve1"></param>
+		/// <param name="HedgeFlag"></param>
+		/// <param name="ExchangeID"></param>
+		/// <param name="InstrumentID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryExchangeMarginRate(string BrokerID = "",string reserve1 = "",TThostFtdcHedgeFlagType HedgeFlag = TThostFtdcHedgeFlagType.THOST_FTDC_HF_Speculation,string ExchangeID = "",string InstrumentID = "")
         {
 			CThostFtdcQryExchangeMarginRateField pQryExchangeMarginRate = new CThostFtdcQryExchangeMarginRateField
 			{
@@ -1248,9 +1937,16 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQryExchangeMarginRate", typeof(DeleReqQryExchangeMarginRate)) as DeleReqQryExchangeMarginRate)(_api, ref pQryExchangeMarginRate, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryExchangeMarginRateAdjust(string BrokerID = "",string reserve1 = "",TThostFtdcHedgeFlagType HedgeFlag = TThostFtdcHedgeFlagType.THOST_FTDC_HF_Speculation,string InstrumentID = "")
+		/// <summary>
+		/// 请求查询交易所调整保证金率
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="reserve1"></param>
+		/// <param name="HedgeFlag"></param>
+		/// <param name="InstrumentID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryExchangeMarginRateAdjust(string BrokerID = "",string reserve1 = "",TThostFtdcHedgeFlagType HedgeFlag = TThostFtdcHedgeFlagType.THOST_FTDC_HF_Speculation,string InstrumentID = "")
         {
 			CThostFtdcQryExchangeMarginRateAdjustField pQryExchangeMarginRateAdjust = new CThostFtdcQryExchangeMarginRateAdjustField
 			{
@@ -1261,9 +1957,15 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQryExchangeMarginRateAdjust", typeof(DeleReqQryExchangeMarginRateAdjust)) as DeleReqQryExchangeMarginRateAdjust)(_api, ref pQryExchangeMarginRateAdjust, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryExchangeRate(string BrokerID = "",string FromCurrencyID = "",string ToCurrencyID = "")
+		/// <summary>
+		/// 请求查询汇率
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="FromCurrencyID"></param>
+		/// <param name="ToCurrencyID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryExchangeRate(string BrokerID = "",string FromCurrencyID = "",string ToCurrencyID = "")
         {
 			CThostFtdcQryExchangeRateField pQryExchangeRate = new CThostFtdcQryExchangeRateField
 			{
@@ -1273,9 +1975,16 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQryExchangeRate", typeof(DeleReqQryExchangeRate)) as DeleReqQryExchangeRate)(_api, ref pQryExchangeRate, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQrySecAgentACIDMap(string BrokerID = "",string UserID = "",string AccountID = "",string CurrencyID = "")
+		/// <summary>
+		/// 请求查询二级代理操作员银期权限
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="UserID"></param>
+		/// <param name="AccountID"></param>
+		/// <param name="CurrencyID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQrySecAgentACIDMap(string BrokerID = "",string UserID = "",string AccountID = "",string CurrencyID = "")
         {
 			CThostFtdcQrySecAgentACIDMapField pQrySecAgentACIDMap = new CThostFtdcQrySecAgentACIDMapField
 			{
@@ -1286,9 +1995,15 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQrySecAgentACIDMap", typeof(DeleReqQrySecAgentACIDMap)) as DeleReqQrySecAgentACIDMap)(_api, ref pQrySecAgentACIDMap, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryProductExchRate(string reserve1 = "",string ExchangeID = "",string ProductID = "")
+		/// <summary>
+		/// 请求查询产品报价汇率
+		/// </summary>
+		/// <param name="reserve1"></param>
+		/// <param name="ExchangeID"></param>
+		/// <param name="ProductID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryProductExchRate(string reserve1 = "",string ExchangeID = "",string ProductID = "")
         {
 			CThostFtdcQryProductExchRateField pQryProductExchRate = new CThostFtdcQryProductExchRateField
 			{
@@ -1298,9 +2013,15 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQryProductExchRate", typeof(DeleReqQryProductExchRate)) as DeleReqQryProductExchRate)(_api, ref pQryProductExchRate, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryProductGroup(string reserve1 = "",string ExchangeID = "",string ProductID = "")
+		/// <summary>
+		/// 请求查询产品组
+		/// </summary>
+		/// <param name="reserve1"></param>
+		/// <param name="ExchangeID"></param>
+		/// <param name="ProductID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryProductGroup(string reserve1 = "",string ExchangeID = "",string ProductID = "")
         {
 			CThostFtdcQryProductGroupField pQryProductGroup = new CThostFtdcQryProductGroupField
 			{
@@ -1310,9 +2031,16 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQryProductGroup", typeof(DeleReqQryProductGroup)) as DeleReqQryProductGroup)(_api, ref pQryProductGroup, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryMMInstrumentCommissionRate(string BrokerID = "",string InvestorID = "",string reserve1 = "",string InstrumentID = "")
+		/// <summary>
+		/// 请求查询做市商合约手续费率
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="reserve1"></param>
+		/// <param name="InstrumentID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryMMInstrumentCommissionRate(string BrokerID = "",string InvestorID = "",string reserve1 = "",string InstrumentID = "")
         {
 			CThostFtdcQryMMInstrumentCommissionRateField pQryMMInstrumentCommissionRate = new CThostFtdcQryMMInstrumentCommissionRateField
 			{
@@ -1323,9 +2051,16 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQryMMInstrumentCommissionRate", typeof(DeleReqQryMMInstrumentCommissionRate)) as DeleReqQryMMInstrumentCommissionRate)(_api, ref pQryMMInstrumentCommissionRate, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryMMOptionInstrCommRate(string BrokerID = "",string InvestorID = "",string reserve1 = "",string InstrumentID = "")
+		/// <summary>
+		/// 请求查询做市商期权合约手续费
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="reserve1"></param>
+		/// <param name="InstrumentID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryMMOptionInstrCommRate(string BrokerID = "",string InvestorID = "",string reserve1 = "",string InstrumentID = "")
         {
 			CThostFtdcQryMMOptionInstrCommRateField pQryMMOptionInstrCommRate = new CThostFtdcQryMMOptionInstrCommRateField
 			{
@@ -1336,9 +2071,16 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQryMMOptionInstrCommRate", typeof(DeleReqQryMMOptionInstrCommRate)) as DeleReqQryMMOptionInstrCommRate)(_api, ref pQryMMOptionInstrCommRate, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryInstrumentOrderCommRate(string BrokerID = "",string InvestorID = "",string reserve1 = "",string InstrumentID = "")
+		/// <summary>
+		/// 请求查询报单手续费
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="reserve1"></param>
+		/// <param name="InstrumentID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryInstrumentOrderCommRate(string BrokerID = "",string InvestorID = "",string reserve1 = "",string InstrumentID = "")
         {
 			CThostFtdcQryInstrumentOrderCommRateField pQryInstrumentOrderCommRate = new CThostFtdcQryInstrumentOrderCommRateField
 			{
@@ -1349,9 +2091,17 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQryInstrumentOrderCommRate", typeof(DeleReqQryInstrumentOrderCommRate)) as DeleReqQryInstrumentOrderCommRate)(_api, ref pQryInstrumentOrderCommRate, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQrySecAgentTradingAccount(string BrokerID = "",string InvestorID = "",string CurrencyID = "",TThostFtdcBizTypeType BizType = TThostFtdcBizTypeType.THOST_FTDC_BZTP_Future,string AccountID = "")
+		/// <summary>
+		/// 请求二级代理查询资金账户
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="CurrencyID"></param>
+		/// <param name="BizType"></param>
+		/// <param name="AccountID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQrySecAgentTradingAccount(string BrokerID = "",string InvestorID = "",string CurrencyID = "",TThostFtdcBizTypeType BizType = TThostFtdcBizTypeType.THOST_FTDC_BZTP_Future,string AccountID = "")
         {
 			CThostFtdcQryTradingAccountField pQryTradingAccount = new CThostFtdcQryTradingAccountField
 			{
@@ -1363,9 +2113,14 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQrySecAgentTradingAccount", typeof(DeleReqQrySecAgentTradingAccount)) as DeleReqQrySecAgentTradingAccount)(_api, ref pQryTradingAccount, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQrySecAgentCheckMode(string BrokerID = "",string InvestorID = "")
+		/// <summary>
+		/// 请求查询二级代理商资金校验模式
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQrySecAgentCheckMode(string BrokerID = "",string InvestorID = "")
         {
 			CThostFtdcQrySecAgentCheckModeField pQrySecAgentCheckMode = new CThostFtdcQrySecAgentCheckModeField
 			{
@@ -1374,9 +2129,14 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQrySecAgentCheckMode", typeof(DeleReqQrySecAgentCheckMode)) as DeleReqQrySecAgentCheckMode)(_api, ref pQrySecAgentCheckMode, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQrySecAgentTradeInfo(string BrokerID = "",string BrokerSecAgentID = "")
+		/// <summary>
+		/// 请求查询二级代理商信息
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="BrokerSecAgentID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQrySecAgentTradeInfo(string BrokerID = "",string BrokerSecAgentID = "")
         {
 			CThostFtdcQrySecAgentTradeInfoField pQrySecAgentTradeInfo = new CThostFtdcQrySecAgentTradeInfoField
 			{
@@ -1385,9 +2145,21 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQrySecAgentTradeInfo", typeof(DeleReqQrySecAgentTradeInfo)) as DeleReqQrySecAgentTradeInfo)(_api, ref pQrySecAgentTradeInfo, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryOptionInstrTradeCost(string BrokerID = "",string InvestorID = "",string reserve1 = "",TThostFtdcHedgeFlagType HedgeFlag = TThostFtdcHedgeFlagType.THOST_FTDC_HF_Speculation,double InputPrice = 0.0,double UnderlyingPrice = 0.0,string ExchangeID = "",string InvestUnitID = "",string InstrumentID = "")
+		/// <summary>
+		/// 请求查询期权交易成本
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="reserve1"></param>
+		/// <param name="HedgeFlag"></param>
+		/// <param name="InputPrice"></param>
+		/// <param name="UnderlyingPrice"></param>
+		/// <param name="ExchangeID"></param>
+		/// <param name="InvestUnitID"></param>
+		/// <param name="InstrumentID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryOptionInstrTradeCost(string BrokerID = "",string InvestorID = "",string reserve1 = "",TThostFtdcHedgeFlagType HedgeFlag = TThostFtdcHedgeFlagType.THOST_FTDC_HF_Speculation,double InputPrice = 0.0,double UnderlyingPrice = 0.0,string ExchangeID = "",string InvestUnitID = "",string InstrumentID = "")
         {
 			CThostFtdcQryOptionInstrTradeCostField pQryOptionInstrTradeCost = new CThostFtdcQryOptionInstrTradeCostField
 			{
@@ -1403,9 +2175,18 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQryOptionInstrTradeCost", typeof(DeleReqQryOptionInstrTradeCost)) as DeleReqQryOptionInstrTradeCost)(_api, ref pQryOptionInstrTradeCost, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryOptionInstrCommRate(string BrokerID = "",string InvestorID = "",string reserve1 = "",string ExchangeID = "",string InvestUnitID = "",string InstrumentID = "")
+		/// <summary>
+		/// 请求查询期权合约手续费
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="reserve1"></param>
+		/// <param name="ExchangeID"></param>
+		/// <param name="InvestUnitID"></param>
+		/// <param name="InstrumentID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryOptionInstrCommRate(string BrokerID = "",string InvestorID = "",string reserve1 = "",string ExchangeID = "",string InvestUnitID = "",string InstrumentID = "")
         {
 			CThostFtdcQryOptionInstrCommRateField pQryOptionInstrCommRate = new CThostFtdcQryOptionInstrCommRateField
 			{
@@ -1418,9 +2199,20 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQryOptionInstrCommRate", typeof(DeleReqQryOptionInstrCommRate)) as DeleReqQryOptionInstrCommRate)(_api, ref pQryOptionInstrCommRate, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryExecOrder(string BrokerID = "",string InvestorID = "",string reserve1 = "",string ExchangeID = "",string ExecOrderSysID = "",string InsertTimeStart = "",string InsertTimeEnd = "",string InstrumentID = "")
+		/// <summary>
+		/// 请求查询执行宣告
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="reserve1"></param>
+		/// <param name="ExchangeID"></param>
+		/// <param name="ExecOrderSysID"></param>
+		/// <param name="InsertTimeStart"></param>
+		/// <param name="InsertTimeEnd"></param>
+		/// <param name="InstrumentID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryExecOrder(string BrokerID = "",string InvestorID = "",string reserve1 = "",string ExchangeID = "",string ExecOrderSysID = "",string InsertTimeStart = "",string InsertTimeEnd = "",string InstrumentID = "")
         {
 			CThostFtdcQryExecOrderField pQryExecOrder = new CThostFtdcQryExecOrderField
 			{
@@ -1435,9 +2227,20 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQryExecOrder", typeof(DeleReqQryExecOrder)) as DeleReqQryExecOrder)(_api, ref pQryExecOrder, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryForQuote(string BrokerID = "",string InvestorID = "",string reserve1 = "",string ExchangeID = "",string InsertTimeStart = "",string InsertTimeEnd = "",string InvestUnitID = "",string InstrumentID = "")
+		/// <summary>
+		/// 请求查询询价
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="reserve1"></param>
+		/// <param name="ExchangeID"></param>
+		/// <param name="InsertTimeStart"></param>
+		/// <param name="InsertTimeEnd"></param>
+		/// <param name="InvestUnitID"></param>
+		/// <param name="InstrumentID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryForQuote(string BrokerID = "",string InvestorID = "",string reserve1 = "",string ExchangeID = "",string InsertTimeStart = "",string InsertTimeEnd = "",string InvestUnitID = "",string InstrumentID = "")
         {
 			CThostFtdcQryForQuoteField pQryForQuote = new CThostFtdcQryForQuoteField
 			{
@@ -1452,9 +2255,21 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQryForQuote", typeof(DeleReqQryForQuote)) as DeleReqQryForQuote)(_api, ref pQryForQuote, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryQuote(string BrokerID = "",string InvestorID = "",string reserve1 = "",string ExchangeID = "",string QuoteSysID = "",string InsertTimeStart = "",string InsertTimeEnd = "",string InvestUnitID = "",string InstrumentID = "")
+		/// <summary>
+		/// 请求查询报价
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="reserve1"></param>
+		/// <param name="ExchangeID"></param>
+		/// <param name="QuoteSysID"></param>
+		/// <param name="InsertTimeStart"></param>
+		/// <param name="InsertTimeEnd"></param>
+		/// <param name="InvestUnitID"></param>
+		/// <param name="InstrumentID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryQuote(string BrokerID = "",string InvestorID = "",string reserve1 = "",string ExchangeID = "",string QuoteSysID = "",string InsertTimeStart = "",string InsertTimeEnd = "",string InvestUnitID = "",string InstrumentID = "")
         {
 			CThostFtdcQryQuoteField pQryQuote = new CThostFtdcQryQuoteField
 			{
@@ -1470,9 +2285,20 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQryQuote", typeof(DeleReqQryQuote)) as DeleReqQryQuote)(_api, ref pQryQuote, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryOptionSelfClose(string BrokerID = "",string InvestorID = "",string reserve1 = "",string ExchangeID = "",string OptionSelfCloseSysID = "",string InsertTimeStart = "",string InsertTimeEnd = "",string InstrumentID = "")
+		/// <summary>
+		/// 请求查询期权自对冲
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="reserve1"></param>
+		/// <param name="ExchangeID"></param>
+		/// <param name="OptionSelfCloseSysID"></param>
+		/// <param name="InsertTimeStart"></param>
+		/// <param name="InsertTimeEnd"></param>
+		/// <param name="InstrumentID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryOptionSelfClose(string BrokerID = "",string InvestorID = "",string reserve1 = "",string ExchangeID = "",string OptionSelfCloseSysID = "",string InsertTimeStart = "",string InsertTimeEnd = "",string InstrumentID = "")
         {
 			CThostFtdcQryOptionSelfCloseField pQryOptionSelfClose = new CThostFtdcQryOptionSelfCloseField
 			{
@@ -1487,9 +2313,15 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQryOptionSelfClose", typeof(DeleReqQryOptionSelfClose)) as DeleReqQryOptionSelfClose)(_api, ref pQryOptionSelfClose, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryInvestUnit(string BrokerID = "",string InvestorID = "",string InvestUnitID = "")
+		/// <summary>
+		/// 请求查询投资单元
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="InvestUnitID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryInvestUnit(string BrokerID = "",string InvestorID = "",string InvestUnitID = "")
         {
 			CThostFtdcQryInvestUnitField pQryInvestUnit = new CThostFtdcQryInvestUnitField
 			{
@@ -1499,9 +2331,16 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQryInvestUnit", typeof(DeleReqQryInvestUnit)) as DeleReqQryInvestUnit)(_api, ref pQryInvestUnit, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryCombInstrumentGuard(string BrokerID = "",string reserve1 = "",string ExchangeID = "",string InstrumentID = "")
+		/// <summary>
+		/// 请求查询组合合约安全系数
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="reserve1"></param>
+		/// <param name="ExchangeID"></param>
+		/// <param name="InstrumentID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryCombInstrumentGuard(string BrokerID = "",string reserve1 = "",string ExchangeID = "",string InstrumentID = "")
         {
 			CThostFtdcQryCombInstrumentGuardField pQryCombInstrumentGuard = new CThostFtdcQryCombInstrumentGuardField
 			{
@@ -1512,9 +2351,18 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQryCombInstrumentGuard", typeof(DeleReqQryCombInstrumentGuard)) as DeleReqQryCombInstrumentGuard)(_api, ref pQryCombInstrumentGuard, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryCombAction(string BrokerID = "",string InvestorID = "",string reserve1 = "",string ExchangeID = "",string InvestUnitID = "",string InstrumentID = "")
+		/// <summary>
+		/// 请求查询申请组合
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="reserve1"></param>
+		/// <param name="ExchangeID"></param>
+		/// <param name="InvestUnitID"></param>
+		/// <param name="InstrumentID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryCombAction(string BrokerID = "",string InvestorID = "",string reserve1 = "",string ExchangeID = "",string InvestUnitID = "",string InstrumentID = "")
         {
 			CThostFtdcQryCombActionField pQryCombAction = new CThostFtdcQryCombActionField
 			{
@@ -1527,9 +2375,16 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQryCombAction", typeof(DeleReqQryCombAction)) as DeleReqQryCombAction)(_api, ref pQryCombAction, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryTransferSerial(string BrokerID = "",string AccountID = "",string BankID = "",string CurrencyID = "")
+		/// <summary>
+		/// 请求查询转帐流水
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="AccountID"></param>
+		/// <param name="BankID"></param>
+		/// <param name="CurrencyID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryTransferSerial(string BrokerID = "",string AccountID = "",string BankID = "",string CurrencyID = "")
         {
 			CThostFtdcQryTransferSerialField pQryTransferSerial = new CThostFtdcQryTransferSerialField
 			{
@@ -1540,9 +2395,17 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQryTransferSerial", typeof(DeleReqQryTransferSerial)) as DeleReqQryTransferSerial)(_api, ref pQryTransferSerial, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryAccountregister(string BrokerID = "",string AccountID = "",string BankID = "",string BankBranchID = "",string CurrencyID = "")
+		/// <summary>
+		/// 请求查询银期签约关系
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="AccountID"></param>
+		/// <param name="BankID"></param>
+		/// <param name="BankBranchID"></param>
+		/// <param name="CurrencyID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryAccountregister(string BrokerID = "",string AccountID = "",string BankID = "",string BankBranchID = "",string CurrencyID = "")
         {
 			CThostFtdcQryAccountregisterField pQryAccountregister = new CThostFtdcQryAccountregisterField
 			{
@@ -1554,9 +2417,15 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQryAccountregister", typeof(DeleReqQryAccountregister)) as DeleReqQryAccountregister)(_api, ref pQryAccountregister, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryContractBank(string BrokerID = "",string BankID = "",string BankBrchID = "")
+		/// <summary>
+		/// 请求查询签约银行
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="BankID"></param>
+		/// <param name="BankBrchID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryContractBank(string BrokerID = "",string BankID = "",string BankBrchID = "")
         {
 			CThostFtdcQryContractBankField pQryContractBank = new CThostFtdcQryContractBankField
 			{
@@ -1566,9 +2435,18 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQryContractBank", typeof(DeleReqQryContractBank)) as DeleReqQryContractBank)(_api, ref pQryContractBank, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryParkedOrder(string BrokerID = "",string InvestorID = "",string reserve1 = "",string ExchangeID = "",string InvestUnitID = "",string InstrumentID = "")
+		/// <summary>
+		/// 请求查询预埋单
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="reserve1"></param>
+		/// <param name="ExchangeID"></param>
+		/// <param name="InvestUnitID"></param>
+		/// <param name="InstrumentID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryParkedOrder(string BrokerID = "",string InvestorID = "",string reserve1 = "",string ExchangeID = "",string InvestUnitID = "",string InstrumentID = "")
         {
 			CThostFtdcQryParkedOrderField pQryParkedOrder = new CThostFtdcQryParkedOrderField
 			{
@@ -1581,9 +2459,18 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQryParkedOrder", typeof(DeleReqQryParkedOrder)) as DeleReqQryParkedOrder)(_api, ref pQryParkedOrder, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryParkedOrderAction(string BrokerID = "",string InvestorID = "",string reserve1 = "",string ExchangeID = "",string InvestUnitID = "",string InstrumentID = "")
+		/// <summary>
+		/// 请求查询预埋撤单
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="reserve1"></param>
+		/// <param name="ExchangeID"></param>
+		/// <param name="InvestUnitID"></param>
+		/// <param name="InstrumentID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryParkedOrderAction(string BrokerID = "",string InvestorID = "",string reserve1 = "",string ExchangeID = "",string InvestUnitID = "",string InstrumentID = "")
         {
 			CThostFtdcQryParkedOrderActionField pQryParkedOrderAction = new CThostFtdcQryParkedOrderActionField
 			{
@@ -1596,9 +2483,15 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQryParkedOrderAction", typeof(DeleReqQryParkedOrderAction)) as DeleReqQryParkedOrderAction)(_api, ref pQryParkedOrderAction, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryTradingNotice(string BrokerID = "",string InvestorID = "",string InvestUnitID = "")
+		/// <summary>
+		/// 请求查询交易通知
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="InvestUnitID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryTradingNotice(string BrokerID = "",string InvestorID = "",string InvestUnitID = "")
         {
 			CThostFtdcQryTradingNoticeField pQryTradingNotice = new CThostFtdcQryTradingNoticeField
 			{
@@ -1608,9 +2501,16 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQryTradingNotice", typeof(DeleReqQryTradingNotice)) as DeleReqQryTradingNotice)(_api, ref pQryTradingNotice, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryBrokerTradingParams(string BrokerID = "",string InvestorID = "",string CurrencyID = "",string AccountID = "")
+		/// <summary>
+		/// 请求查询经纪公司交易参数
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="CurrencyID"></param>
+		/// <param name="AccountID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryBrokerTradingParams(string BrokerID = "",string InvestorID = "",string CurrencyID = "",string AccountID = "")
         {
 			CThostFtdcQryBrokerTradingParamsField pQryBrokerTradingParams = new CThostFtdcQryBrokerTradingParamsField
 			{
@@ -1621,9 +2521,16 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQryBrokerTradingParams", typeof(DeleReqQryBrokerTradingParams)) as DeleReqQryBrokerTradingParams)(_api, ref pQryBrokerTradingParams, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryBrokerTradingAlgos(string BrokerID = "",string ExchangeID = "",string reserve1 = "",string InstrumentID = "")
+		/// <summary>
+		/// 请求查询经纪公司交易算法
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="ExchangeID"></param>
+		/// <param name="reserve1"></param>
+		/// <param name="InstrumentID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryBrokerTradingAlgos(string BrokerID = "",string ExchangeID = "",string reserve1 = "",string InstrumentID = "")
         {
 			CThostFtdcQryBrokerTradingAlgosField pQryBrokerTradingAlgos = new CThostFtdcQryBrokerTradingAlgosField
 			{
@@ -1634,9 +2541,15 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQryBrokerTradingAlgos", typeof(DeleReqQryBrokerTradingAlgos)) as DeleReqQryBrokerTradingAlgos)(_api, ref pQryBrokerTradingAlgos, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQueryCFMMCTradingAccountToken(string BrokerID = "",string InvestorID = "",string InvestUnitID = "")
+		/// <summary>
+		/// 请求查询监控中心用户令牌
+		/// </summary>
+		/// <param name="BrokerID"></param>
+		/// <param name="InvestorID"></param>
+		/// <param name="InvestUnitID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQueryCFMMCTradingAccountToken(string BrokerID = "",string InvestorID = "",string InvestUnitID = "")
         {
 			CThostFtdcQueryCFMMCTradingAccountTokenField pQueryCFMMCTradingAccountToken = new CThostFtdcQueryCFMMCTradingAccountTokenField
 			{
@@ -1646,9 +2559,56 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQueryCFMMCTradingAccountToken", typeof(DeleReqQueryCFMMCTradingAccountToken)) as DeleReqQueryCFMMCTradingAccountToken)(_api, ref pQueryCFMMCTradingAccountToken, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqFromBankToFutureByFuture(string TradeCode = "",string BankID = "",string BankBranchID = "",string BrokerID = "",string BrokerBranchID = "",string TradeDate = "",string TradeTime = "",string BankSerial = "",string TradingDay = "",int PlateSerial = 0,TThostFtdcLastFragmentType LastFragment = TThostFtdcLastFragmentType.THOST_FTDC_LF_Yes,int SessionID = 0,string CustomerName = "",TThostFtdcIdCardTypeType IdCardType = TThostFtdcIdCardTypeType.THOST_FTDC_ICT_EID,string IdentifiedCardNo = "",TThostFtdcCustTypeType CustType = TThostFtdcCustTypeType.THOST_FTDC_CUSTT_Person,string BankAccount = "",string BankPassWord = "",string AccountID = "",string Password = "",int InstallID = 0,int FutureSerial = 0,string UserID = "",TThostFtdcYesNoIndicatorType VerifyCertNoFlag = TThostFtdcYesNoIndicatorType.THOST_FTDC_YNI_Yes,string CurrencyID = "",double TradeAmount = 0.0,double FutureFetchAmount = 0.0,TThostFtdcFeePayFlagType FeePayFlag = TThostFtdcFeePayFlagType.THOST_FTDC_FPF_BEN,double CustFee = 0.0,double BrokerFee = 0.0,string Message = "",string Digest = "",TThostFtdcBankAccTypeType BankAccType = TThostFtdcBankAccTypeType.THOST_FTDC_BAT_BankBook,string DeviceID = "",TThostFtdcBankAccTypeType BankSecuAccType = TThostFtdcBankAccTypeType.THOST_FTDC_BAT_BankBook,string BrokerIDByBank = "",string BankSecuAcc = "",TThostFtdcPwdFlagType BankPwdFlag = TThostFtdcPwdFlagType.THOST_FTDC_BPWDF_NoCheck,TThostFtdcPwdFlagType SecuPwdFlag = TThostFtdcPwdFlagType.THOST_FTDC_BPWDF_NoCheck,string OperNo = "",int RequestID = 0,int TID = 0,TThostFtdcTransferStatusType TransferStatus = TThostFtdcTransferStatusType.THOST_FTDC_TRFS_Normal,string LongCustomerName = "")
+		/// <summary>
+		/// 期货发起银行资金转期货请求
+		/// </summary>
+		/// <param name="TradeCode"></param>
+		/// <param name="BankID"></param>
+		/// <param name="BankBranchID"></param>
+		/// <param name="BrokerID"></param>
+		/// <param name="BrokerBranchID"></param>
+		/// <param name="TradeDate"></param>
+		/// <param name="TradeTime"></param>
+		/// <param name="BankSerial"></param>
+		/// <param name="TradingDay"></param>
+		/// <param name="PlateSerial"></param>
+		/// <param name="LastFragment"></param>
+		/// <param name="SessionID"></param>
+		/// <param name="CustomerName"></param>
+		/// <param name="IdCardType"></param>
+		/// <param name="IdentifiedCardNo"></param>
+		/// <param name="CustType"></param>
+		/// <param name="BankAccount"></param>
+		/// <param name="BankPassWord"></param>
+		/// <param name="AccountID"></param>
+		/// <param name="Password"></param>
+		/// <param name="InstallID"></param>
+		/// <param name="FutureSerial"></param>
+		/// <param name="UserID"></param>
+		/// <param name="VerifyCertNoFlag"></param>
+		/// <param name="CurrencyID"></param>
+		/// <param name="TradeAmount"></param>
+		/// <param name="FutureFetchAmount"></param>
+		/// <param name="FeePayFlag"></param>
+		/// <param name="CustFee"></param>
+		/// <param name="BrokerFee"></param>
+		/// <param name="Message"></param>
+		/// <param name="Digest"></param>
+		/// <param name="BankAccType"></param>
+		/// <param name="DeviceID"></param>
+		/// <param name="BankSecuAccType"></param>
+		/// <param name="BrokerIDByBank"></param>
+		/// <param name="BankSecuAcc"></param>
+		/// <param name="BankPwdFlag"></param>
+		/// <param name="SecuPwdFlag"></param>
+		/// <param name="OperNo"></param>
+		/// <param name="RequestID"></param>
+		/// <param name="TID"></param>
+		/// <param name="TransferStatus"></param>
+		/// <param name="LongCustomerName"></param>
+		/// <returns></returns>
+		public IntPtr ReqFromBankToFutureByFuture(string TradeCode = "",string BankID = "",string BankBranchID = "",string BrokerID = "",string BrokerBranchID = "",string TradeDate = "",string TradeTime = "",string BankSerial = "",string TradingDay = "",int PlateSerial = 0,TThostFtdcLastFragmentType LastFragment = TThostFtdcLastFragmentType.THOST_FTDC_LF_Yes,int SessionID = 0,string CustomerName = "",TThostFtdcIdCardTypeType IdCardType = TThostFtdcIdCardTypeType.THOST_FTDC_ICT_EID,string IdentifiedCardNo = "",TThostFtdcCustTypeType CustType = TThostFtdcCustTypeType.THOST_FTDC_CUSTT_Person,string BankAccount = "",string BankPassWord = "",string AccountID = "",string Password = "",int InstallID = 0,int FutureSerial = 0,string UserID = "",TThostFtdcYesNoIndicatorType VerifyCertNoFlag = TThostFtdcYesNoIndicatorType.THOST_FTDC_YNI_Yes,string CurrencyID = "",double TradeAmount = 0.0,double FutureFetchAmount = 0.0,TThostFtdcFeePayFlagType FeePayFlag = TThostFtdcFeePayFlagType.THOST_FTDC_FPF_BEN,double CustFee = 0.0,double BrokerFee = 0.0,string Message = "",string Digest = "",TThostFtdcBankAccTypeType BankAccType = TThostFtdcBankAccTypeType.THOST_FTDC_BAT_BankBook,string DeviceID = "",TThostFtdcBankAccTypeType BankSecuAccType = TThostFtdcBankAccTypeType.THOST_FTDC_BAT_BankBook,string BrokerIDByBank = "",string BankSecuAcc = "",TThostFtdcPwdFlagType BankPwdFlag = TThostFtdcPwdFlagType.THOST_FTDC_BPWDF_NoCheck,TThostFtdcPwdFlagType SecuPwdFlag = TThostFtdcPwdFlagType.THOST_FTDC_BPWDF_NoCheck,string OperNo = "",int RequestID = 0,int TID = 0,TThostFtdcTransferStatusType TransferStatus = TThostFtdcTransferStatusType.THOST_FTDC_TRFS_Normal,string LongCustomerName = "")
         {
 			CThostFtdcReqTransferField pReqTransfer = new CThostFtdcReqTransferField
 			{
@@ -1699,9 +2659,56 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqFromBankToFutureByFuture", typeof(DeleReqFromBankToFutureByFuture)) as DeleReqFromBankToFutureByFuture)(_api, ref pReqTransfer, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqFromFutureToBankByFuture(string TradeCode = "",string BankID = "",string BankBranchID = "",string BrokerID = "",string BrokerBranchID = "",string TradeDate = "",string TradeTime = "",string BankSerial = "",string TradingDay = "",int PlateSerial = 0,TThostFtdcLastFragmentType LastFragment = TThostFtdcLastFragmentType.THOST_FTDC_LF_Yes,int SessionID = 0,string CustomerName = "",TThostFtdcIdCardTypeType IdCardType = TThostFtdcIdCardTypeType.THOST_FTDC_ICT_EID,string IdentifiedCardNo = "",TThostFtdcCustTypeType CustType = TThostFtdcCustTypeType.THOST_FTDC_CUSTT_Person,string BankAccount = "",string BankPassWord = "",string AccountID = "",string Password = "",int InstallID = 0,int FutureSerial = 0,string UserID = "",TThostFtdcYesNoIndicatorType VerifyCertNoFlag = TThostFtdcYesNoIndicatorType.THOST_FTDC_YNI_Yes,string CurrencyID = "",double TradeAmount = 0.0,double FutureFetchAmount = 0.0,TThostFtdcFeePayFlagType FeePayFlag = TThostFtdcFeePayFlagType.THOST_FTDC_FPF_BEN,double CustFee = 0.0,double BrokerFee = 0.0,string Message = "",string Digest = "",TThostFtdcBankAccTypeType BankAccType = TThostFtdcBankAccTypeType.THOST_FTDC_BAT_BankBook,string DeviceID = "",TThostFtdcBankAccTypeType BankSecuAccType = TThostFtdcBankAccTypeType.THOST_FTDC_BAT_BankBook,string BrokerIDByBank = "",string BankSecuAcc = "",TThostFtdcPwdFlagType BankPwdFlag = TThostFtdcPwdFlagType.THOST_FTDC_BPWDF_NoCheck,TThostFtdcPwdFlagType SecuPwdFlag = TThostFtdcPwdFlagType.THOST_FTDC_BPWDF_NoCheck,string OperNo = "",int RequestID = 0,int TID = 0,TThostFtdcTransferStatusType TransferStatus = TThostFtdcTransferStatusType.THOST_FTDC_TRFS_Normal,string LongCustomerName = "")
+		/// <summary>
+		/// 期货发起期货资金转银行请求
+		/// </summary>
+		/// <param name="TradeCode"></param>
+		/// <param name="BankID"></param>
+		/// <param name="BankBranchID"></param>
+		/// <param name="BrokerID"></param>
+		/// <param name="BrokerBranchID"></param>
+		/// <param name="TradeDate"></param>
+		/// <param name="TradeTime"></param>
+		/// <param name="BankSerial"></param>
+		/// <param name="TradingDay"></param>
+		/// <param name="PlateSerial"></param>
+		/// <param name="LastFragment"></param>
+		/// <param name="SessionID"></param>
+		/// <param name="CustomerName"></param>
+		/// <param name="IdCardType"></param>
+		/// <param name="IdentifiedCardNo"></param>
+		/// <param name="CustType"></param>
+		/// <param name="BankAccount"></param>
+		/// <param name="BankPassWord"></param>
+		/// <param name="AccountID"></param>
+		/// <param name="Password"></param>
+		/// <param name="InstallID"></param>
+		/// <param name="FutureSerial"></param>
+		/// <param name="UserID"></param>
+		/// <param name="VerifyCertNoFlag"></param>
+		/// <param name="CurrencyID"></param>
+		/// <param name="TradeAmount"></param>
+		/// <param name="FutureFetchAmount"></param>
+		/// <param name="FeePayFlag"></param>
+		/// <param name="CustFee"></param>
+		/// <param name="BrokerFee"></param>
+		/// <param name="Message"></param>
+		/// <param name="Digest"></param>
+		/// <param name="BankAccType"></param>
+		/// <param name="DeviceID"></param>
+		/// <param name="BankSecuAccType"></param>
+		/// <param name="BrokerIDByBank"></param>
+		/// <param name="BankSecuAcc"></param>
+		/// <param name="BankPwdFlag"></param>
+		/// <param name="SecuPwdFlag"></param>
+		/// <param name="OperNo"></param>
+		/// <param name="RequestID"></param>
+		/// <param name="TID"></param>
+		/// <param name="TransferStatus"></param>
+		/// <param name="LongCustomerName"></param>
+		/// <returns></returns>
+		public IntPtr ReqFromFutureToBankByFuture(string TradeCode = "",string BankID = "",string BankBranchID = "",string BrokerID = "",string BrokerBranchID = "",string TradeDate = "",string TradeTime = "",string BankSerial = "",string TradingDay = "",int PlateSerial = 0,TThostFtdcLastFragmentType LastFragment = TThostFtdcLastFragmentType.THOST_FTDC_LF_Yes,int SessionID = 0,string CustomerName = "",TThostFtdcIdCardTypeType IdCardType = TThostFtdcIdCardTypeType.THOST_FTDC_ICT_EID,string IdentifiedCardNo = "",TThostFtdcCustTypeType CustType = TThostFtdcCustTypeType.THOST_FTDC_CUSTT_Person,string BankAccount = "",string BankPassWord = "",string AccountID = "",string Password = "",int InstallID = 0,int FutureSerial = 0,string UserID = "",TThostFtdcYesNoIndicatorType VerifyCertNoFlag = TThostFtdcYesNoIndicatorType.THOST_FTDC_YNI_Yes,string CurrencyID = "",double TradeAmount = 0.0,double FutureFetchAmount = 0.0,TThostFtdcFeePayFlagType FeePayFlag = TThostFtdcFeePayFlagType.THOST_FTDC_FPF_BEN,double CustFee = 0.0,double BrokerFee = 0.0,string Message = "",string Digest = "",TThostFtdcBankAccTypeType BankAccType = TThostFtdcBankAccTypeType.THOST_FTDC_BAT_BankBook,string DeviceID = "",TThostFtdcBankAccTypeType BankSecuAccType = TThostFtdcBankAccTypeType.THOST_FTDC_BAT_BankBook,string BrokerIDByBank = "",string BankSecuAcc = "",TThostFtdcPwdFlagType BankPwdFlag = TThostFtdcPwdFlagType.THOST_FTDC_BPWDF_NoCheck,TThostFtdcPwdFlagType SecuPwdFlag = TThostFtdcPwdFlagType.THOST_FTDC_BPWDF_NoCheck,string OperNo = "",int RequestID = 0,int TID = 0,TThostFtdcTransferStatusType TransferStatus = TThostFtdcTransferStatusType.THOST_FTDC_TRFS_Normal,string LongCustomerName = "")
         {
 			CThostFtdcReqTransferField pReqTransfer = new CThostFtdcReqTransferField
 			{
@@ -1752,9 +2759,49 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqFromFutureToBankByFuture", typeof(DeleReqFromFutureToBankByFuture)) as DeleReqFromFutureToBankByFuture)(_api, ref pReqTransfer, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQueryBankAccountMoneyByFuture(string TradeCode = "",string BankID = "",string BankBranchID = "",string BrokerID = "",string BrokerBranchID = "",string TradeDate = "",string TradeTime = "",string BankSerial = "",string TradingDay = "",int PlateSerial = 0,TThostFtdcLastFragmentType LastFragment = TThostFtdcLastFragmentType.THOST_FTDC_LF_Yes,int SessionID = 0,string CustomerName = "",TThostFtdcIdCardTypeType IdCardType = TThostFtdcIdCardTypeType.THOST_FTDC_ICT_EID,string IdentifiedCardNo = "",TThostFtdcCustTypeType CustType = TThostFtdcCustTypeType.THOST_FTDC_CUSTT_Person,string BankAccount = "",string BankPassWord = "",string AccountID = "",string Password = "",int FutureSerial = 0,int InstallID = 0,string UserID = "",TThostFtdcYesNoIndicatorType VerifyCertNoFlag = TThostFtdcYesNoIndicatorType.THOST_FTDC_YNI_Yes,string CurrencyID = "",string Digest = "",TThostFtdcBankAccTypeType BankAccType = TThostFtdcBankAccTypeType.THOST_FTDC_BAT_BankBook,string DeviceID = "",TThostFtdcBankAccTypeType BankSecuAccType = TThostFtdcBankAccTypeType.THOST_FTDC_BAT_BankBook,string BrokerIDByBank = "",string BankSecuAcc = "",TThostFtdcPwdFlagType BankPwdFlag = TThostFtdcPwdFlagType.THOST_FTDC_BPWDF_NoCheck,TThostFtdcPwdFlagType SecuPwdFlag = TThostFtdcPwdFlagType.THOST_FTDC_BPWDF_NoCheck,string OperNo = "",int RequestID = 0,int TID = 0,string LongCustomerName = "")
+		/// <summary>
+		/// 期货发起查询银行余额请求
+		/// </summary>
+		/// <param name="TradeCode"></param>
+		/// <param name="BankID"></param>
+		/// <param name="BankBranchID"></param>
+		/// <param name="BrokerID"></param>
+		/// <param name="BrokerBranchID"></param>
+		/// <param name="TradeDate"></param>
+		/// <param name="TradeTime"></param>
+		/// <param name="BankSerial"></param>
+		/// <param name="TradingDay"></param>
+		/// <param name="PlateSerial"></param>
+		/// <param name="LastFragment"></param>
+		/// <param name="SessionID"></param>
+		/// <param name="CustomerName"></param>
+		/// <param name="IdCardType"></param>
+		/// <param name="IdentifiedCardNo"></param>
+		/// <param name="CustType"></param>
+		/// <param name="BankAccount"></param>
+		/// <param name="BankPassWord"></param>
+		/// <param name="AccountID"></param>
+		/// <param name="Password"></param>
+		/// <param name="FutureSerial"></param>
+		/// <param name="InstallID"></param>
+		/// <param name="UserID"></param>
+		/// <param name="VerifyCertNoFlag"></param>
+		/// <param name="CurrencyID"></param>
+		/// <param name="Digest"></param>
+		/// <param name="BankAccType"></param>
+		/// <param name="DeviceID"></param>
+		/// <param name="BankSecuAccType"></param>
+		/// <param name="BrokerIDByBank"></param>
+		/// <param name="BankSecuAcc"></param>
+		/// <param name="BankPwdFlag"></param>
+		/// <param name="SecuPwdFlag"></param>
+		/// <param name="OperNo"></param>
+		/// <param name="RequestID"></param>
+		/// <param name="TID"></param>
+		/// <param name="LongCustomerName"></param>
+		/// <returns></returns>
+		public IntPtr ReqQueryBankAccountMoneyByFuture(string TradeCode = "",string BankID = "",string BankBranchID = "",string BrokerID = "",string BrokerBranchID = "",string TradeDate = "",string TradeTime = "",string BankSerial = "",string TradingDay = "",int PlateSerial = 0,TThostFtdcLastFragmentType LastFragment = TThostFtdcLastFragmentType.THOST_FTDC_LF_Yes,int SessionID = 0,string CustomerName = "",TThostFtdcIdCardTypeType IdCardType = TThostFtdcIdCardTypeType.THOST_FTDC_ICT_EID,string IdentifiedCardNo = "",TThostFtdcCustTypeType CustType = TThostFtdcCustTypeType.THOST_FTDC_CUSTT_Person,string BankAccount = "",string BankPassWord = "",string AccountID = "",string Password = "",int FutureSerial = 0,int InstallID = 0,string UserID = "",TThostFtdcYesNoIndicatorType VerifyCertNoFlag = TThostFtdcYesNoIndicatorType.THOST_FTDC_YNI_Yes,string CurrencyID = "",string Digest = "",TThostFtdcBankAccTypeType BankAccType = TThostFtdcBankAccTypeType.THOST_FTDC_BAT_BankBook,string DeviceID = "",TThostFtdcBankAccTypeType BankSecuAccType = TThostFtdcBankAccTypeType.THOST_FTDC_BAT_BankBook,string BrokerIDByBank = "",string BankSecuAcc = "",TThostFtdcPwdFlagType BankPwdFlag = TThostFtdcPwdFlagType.THOST_FTDC_BPWDF_NoCheck,TThostFtdcPwdFlagType SecuPwdFlag = TThostFtdcPwdFlagType.THOST_FTDC_BPWDF_NoCheck,string OperNo = "",int RequestID = 0,int TID = 0,string LongCustomerName = "")
         {
 			CThostFtdcReqQueryAccountField pReqQueryAccount = new CThostFtdcReqQueryAccountField
 			{
@@ -1798,9 +2845,18 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQueryBankAccountMoneyByFuture", typeof(DeleReqQueryBankAccountMoneyByFuture)) as DeleReqQueryBankAccountMoneyByFuture)(_api, ref pReqQueryAccount, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryClassifiedInstrument(string InstrumentID = "",string ExchangeID = "",string ExchangeInstID = "",string ProductID = "",TThostFtdcTradingTypeType TradingType = TThostFtdcTradingTypeType.THOST_FTDC_TD_ALL,TThostFtdcClassTypeType ClassType = TThostFtdcClassTypeType.THOST_FTDC_INS_ALL)
+		/// <summary>
+		/// 请求查询分类合约
+		/// </summary>
+		/// <param name="InstrumentID"></param>
+		/// <param name="ExchangeID"></param>
+		/// <param name="ExchangeInstID"></param>
+		/// <param name="ProductID"></param>
+		/// <param name="TradingType"></param>
+		/// <param name="ClassType"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryClassifiedInstrument(string InstrumentID = "",string ExchangeID = "",string ExchangeInstID = "",string ProductID = "",TThostFtdcTradingTypeType TradingType = TThostFtdcTradingTypeType.THOST_FTDC_TD_ALL,TThostFtdcClassTypeType ClassType = TThostFtdcClassTypeType.THOST_FTDC_INS_ALL)
         {
 			CThostFtdcQryClassifiedInstrumentField pQryClassifiedInstrument = new CThostFtdcQryClassifiedInstrumentField
 			{
@@ -1813,9 +2869,14 @@ namespace nctp
 			};
             return (loader.Invoke( "ReqQryClassifiedInstrument", typeof(DeleReqQryClassifiedInstrument)) as DeleReqQryClassifiedInstrument)(_api, ref pQryClassifiedInstrument, this.nRequestID++);
         }
-                    
 
-        public IntPtr ReqQryCombPromotionParam(string ExchangeID = "",string InstrumentID = "")
+		/// <summary>
+		/// 请求组合优惠比例
+		/// </summary>
+		/// <param name="ExchangeID"></param>
+		/// <param name="InstrumentID"></param>
+		/// <returns></returns>
+		public IntPtr ReqQryCombPromotionParam(string ExchangeID = "",string InstrumentID = "")
         {
 			CThostFtdcQryCombPromotionParamField pQryCombPromotionParam = new CThostFtdcQryCombPromotionParamField
 			{

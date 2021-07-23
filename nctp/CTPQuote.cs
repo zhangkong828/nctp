@@ -179,8 +179,8 @@ namespace nctp
 		public override int ReqConnect()
 		{
 			_q.RegisterFront(this.FrontAddr);
-			//_q.Init();
 			return (int)_q.Init();
+			//_q.Init();			
 			//return (int)_q.Join(); //会造成阻塞
 		}
 
