@@ -5,6 +5,8 @@ using System.Text;
 
 namespace nctp.test
 {
+
+
     public class TestQuote : CTPQuote
     {
         string _inst;
